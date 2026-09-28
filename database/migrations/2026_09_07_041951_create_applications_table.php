@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        // name, email dan phone harusnya ada di user, nanti tanya alur data nya gimana kok tabel applications bisa ada field itu
+        Schema::create('applications', function (Blueprint $table) {
+            $table->id();
+            $table->string('registration_number')->unique();
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('nim_nisn');
+            $table->string('institution');
+            $table->integer('total_interns');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('recommendation_letter');
+            $table->string('proposal')->nullable();
+            $table->string('registration_token')->nullable()->unique();
+            $table->integer('token_quota')->default(0);
+            $table->integer('token_used')->default(0);
+            $table->text('notes')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected', 'revision'])->default('pending');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('applications');
+    }
+};

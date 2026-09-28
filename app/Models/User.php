@@ -7,6 +7,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -22,11 +24,35 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+        'phone',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function internship(): HasOne
+    {
+        return $this->hasOne(Internships::class, 'user_id');
+    }
+    public function mentoredInternship(): HasMany
+    {
+        return $this->hasMany(Internships::class, 'mentor_id');
     }
 }
