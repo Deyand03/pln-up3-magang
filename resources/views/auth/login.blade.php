@@ -19,14 +19,9 @@
 <body
     class="bg-gradient-to-br from-teal-900 via-teal-800 to-slate-900 text-slate-800 font-sans antialiased min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-10 selection:bg-teal-500 selection:text-white">
 
-    <!-- MAIN LOGIN CONTAINER (Desktop Split-Screen: Form Left, Branding Right) -->
     <main
         class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden border border-white/20 flex flex-col-reverse md:flex-row my-auto">
-
-        <!-- LEFT PANEL: Form Login Akun -->
         <div class="w-full md:w-7/12 p-6 sm:p-8 md:p-12 flex flex-col justify-center bg-slate-50/60">
-
-            <!-- Card Header -->
             <div class="mb-6 sm:mb-8">
                 <span
                     class="inline-block text-[11px] font-bold text-teal-800 bg-teal-50 px-3 py-1 rounded-full border border-teal-200/80 mb-2">
@@ -140,34 +135,11 @@
 
             <!-- Brand Header -->
             <div class="relative z-10 flex items-center gap-3">
-                <div
-                    class="w-10 h-10 bg-amber-400 rounded-xl p-1.5 shadow-md flex items-center justify-center shrink-0">
-                    <svg viewBox="0 0 100 100" class="w-full h-full" fill="none">
-                        <path d="M55 5L20 55H50L45 95L80 45H50L55 5Z" fill="#EE2E24" stroke="#005BAA"
-                            stroke-width="6" />
-                    </svg>
-                </div>
-                <div>
-                    <span class="text-xs sm:text-sm font-black tracking-wider text-white block">PT PLN (PERSERO)</span>
-                    <span class="text-[10px] sm:text-xs font-semibold text-teal-200 tracking-tight">UP3 JAMBI</span>
-                </div>
+                <img src="{{ asset('img/logo_pln.png') }}" alt="" class="w-24">
             </div>
 
             <!-- Hero Banner Graphic & Description -->
             <div class="relative z-10 my-6 md:my-8 space-y-4">
-                <div
-                    class="hidden md:flex w-full h-44 rounded-2xl bg-white/10 backdrop-blur-md p-4 border border-white/15 items-center justify-center">
-                    <svg viewBox="0 0 400 220" class="w-full h-full max-w-[260px]" fill="none">
-                        <circle cx="200" cy="110" r="75" fill="#0F766E" fill-opacity="0.4" />
-                        <!-- Lock & Key security graphic -->
-                        <rect x="140" y="80" width="120" height="85" rx="14" fill="#FFFFFF"
-                            fill-opacity="0.95" />
-                        <path d="M165 80V65C165 45.67 180.67 30 200 30C219.33 30 235 45.67 235 65V80" stroke="#FFDE17"
-                            stroke-width="12" stroke-linecap="round" />
-                        <circle cx="200" cy="118" r="10" fill="#0F766E" />
-                        <path d="M200 128V145" stroke="#0F766E" stroke-width="5" stroke-linecap="round" />
-                    </svg>
-                </div>
                 <h2 class="text-lg sm:text-xl md:text-2xl font-black text-white leading-tight">
                     Selamat Datang Kembali
                 </h2>
