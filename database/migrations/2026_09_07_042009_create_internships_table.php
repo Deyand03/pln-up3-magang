@@ -15,9 +15,8 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('mentor_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('application_id')->constrained('applications')->cascadeOnDelete();
-            $table->string('department');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->string('nim_nisn');
+            $table->string('department')->nullable();
             $table->enum('status', ['active', 'completed', 'terminated'])->default('active');
             $table->timestamps();
         });
