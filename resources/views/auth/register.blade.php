@@ -115,6 +115,33 @@
                 <p class="text-xs text-teal-800/80 font-medium mt-1">Buat akun dan mulai magang anda</p>
             </div>
 
+
+            @if (session('error') || $errors->any())
+                <div
+                    class="mb-4 p-3.5 rounded-xl bg-rose-50 border border-rose-200/90 text-rose-900 animate-fade-in space-y-1.5">
+
+                    <!-- Header Pesan Utama -->
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="text-xs font-bold leading-tight">
+                            {{ session('error') ?? 'Mohon periksa kembali inputan Anda:' }}
+                        </span>
+                    </div>
+
+                    <!-- Rincian Error dari Validasi (Jjka ada error inputan form) -->
+                    @if ($errors->any())
+                        <ul class="pl-6 list-disc text-[11px] text-rose-700 space-y-0.5 font-semibold">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+            @endif
             <!-- Registration Form (Identical Labels & Placeholders) -->
             <form action="{{ route('register') }}" method="POST" class="space-y-4">
                 @csrf
@@ -234,6 +261,19 @@
     @vite('resources/js/app.js')
     <!-- Eye Password Toggle Logic -->
     <script>
+        function closeRegisterToast() {
+            const toast = document.getElementById('toast-notification');
+            if (toast) {
+                toast.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }
+        }
+
+        // Otomatis hilangkan toast dalam 5 detik
+        setTimeout(() => {
+            closeRegisterToast();
+        }, 5000);
+
         function togglePasswordVisibility(inputId, btn) {
             const input = document.getElementById(inputId);
             if (input.type === 'password') {
