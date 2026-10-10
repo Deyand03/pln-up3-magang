@@ -16,9 +16,8 @@ class Internships extends Model
         'user_id',
         'mentor_id',
         'application_id',
+        'nim_nisn',
         'department',
-        'start_date',
-        'end_date',
         'status',
     ];
 
