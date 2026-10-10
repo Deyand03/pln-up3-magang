@@ -14,6 +14,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        #leaflet-map {
+            height: 200px;
+            width: 100%;
+            border-radius: 1rem;
+            z-index: 10;
+        }
+    </style>
 </head>
 
 <body class="bg-white text-gray-800 antialiased selection:bg-teal-500 selection:text-white">
@@ -260,6 +270,8 @@
             </div>
         </div>
     </footer>
+    @yield('modals')
+    @stack('scripts')
     @vite('resources/js/app.js')
 </body>
 
