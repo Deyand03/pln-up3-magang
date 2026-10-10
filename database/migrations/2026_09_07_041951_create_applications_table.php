@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->date('end_date');
             $table->string('recommendation_letter');
             $table->string('proposal')->nullable();
+            $table->string('surat_selesai')->nullable();
             $table->string('registration_token')->nullable()->unique();
             $table->integer('token_quota')->default(0);
             $table->integer('token_used')->default(0);
