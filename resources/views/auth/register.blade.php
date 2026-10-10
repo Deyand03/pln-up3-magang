@@ -34,11 +34,9 @@
                 class="fixed top-5 right-5 z-50 max-w-sm w-full bg-white border border-slate-200/90 shadow-2xl rounded-2xl p-4 transition-all duration-300 transform translate-y-0 opacity-100 flex items-start gap-3 border-l-4 {{ session('success') ? 'border-l-emerald-500' : 'border-l-rose-500' }}">
 
                 @if (session('success'))
-                    <div
-                        class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                d="M5 13l4 4L19 7" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
                         </svg>
                     </div>
                     <div class="flex-1 min-w-0">
@@ -64,21 +62,18 @@
                 <button type="button" onclick="closeRegisterToast()"
                     class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors shrink-0 cursor-pointer">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
         @endif
-        <!-- LEFT PANEL: PLN Branding & Graphic (Shows on Desktop md:flex, hidden or compact on mobile) -->
+        {{-- Left Panel --}}
         <div
             class="w-full md:w-5/12 bg-linear-to-br from-teal-800 via-teal-700 to-teal-900 text-white p-6 sm:p-8 md:p-10 flex flex-col justify-between relative overflow-hidden shrink-0">
-            <!-- Subtle Background Mesh Pattern -->
             <div
                 class="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]">
             </div>
 
-            <!-- Top Brand Header -->
             <div class="relative z-10 flex flex-col items-start gap-3">
                 <button onclick="history.back()"
                     class="flex items-center gap-1.5 text-xs font-semibold text-teal-800 hover:text-teal-950 p-1 -ml-1 rounded-lg transition-colors">
@@ -122,8 +117,7 @@
 
                     <!-- Header Pesan Utama -->
                     <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
+                        <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
