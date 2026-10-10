@@ -65,7 +65,19 @@ class InternController extends Controller
 
         return view('intern-dashboard.index', compact('jumlahKehadiran', 'jumlahLogbook', 'periode', 'hariTersisa', 'dataLogbook', 'dataMentor', 'suratSelesai'));
     }
+    public function downloadSuratSelesai()
+    {
+        $appId = auth()->user()->internship->application_id;
+        $application = Applications::findOrFail($appId);
 
+        if (!$application->surat_selesai || !Storage::disk('s3')->exists($application->surat_selesai)) {
+            return back()->with('error', 'Surat Selesai Magang belum diunggah oleh admin.');
+        }
+
+        $namaFile = 'Surat-Selesai-Magang-' . auth()->user()->name . '.pdf';
+
+        return Storage::disk('s3')->download($application->surat_selesai, $namaFile);
+    }
     /**
      * Show the form for creating a new resource.
      */
