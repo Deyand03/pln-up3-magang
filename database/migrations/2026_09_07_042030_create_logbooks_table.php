@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->time('jam_selesai');
             $table->string('nama_kegiatan');
             $table->text('deskripsi_kegiatan');
+            $table->enum('status', ['pending', 'approved'])->default('pending');
             $table->timestamps();
         });
     }
