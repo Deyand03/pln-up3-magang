@@ -18,28 +18,21 @@ class ActivitySeeder extends Seeder
     {
         $internship = Internships::first();
 
-        if (!$internship) return;
+        if (!$internship)
+            return;
 
-        // 1. Data Dummy Presensi Harian
         Attendances::create([
             'internship_id' => $internship->id,
             'date' => '2026-09-01',
-            'check_in' => '07:45:00',
-            'check_out' => '16:30:00',
-            'status' => 'hadir',
-            'notes' => 'Hadir tepat waktu',
+            'status' => 'sakit',
+            'notes' => 'Demam',
         ]);
-
         Attendances::create([
             'internship_id' => $internship->id,
             'date' => '2026-09-02',
-            'check_in' => '07:50:00',
-            'check_out' => '16:35:00',
-            'status' => 'hadir',
-            'notes' => 'Hadir tepat waktu',
+            'status' => 'alfa',
         ]);
 
-        // 2. Data Dummy Logbook Harian
         Logbooks::create([
             'internship_id' => $internship->id,
             'date' => '2026-09-01',
@@ -48,14 +41,24 @@ class ActivitySeeder extends Seeder
             'nama_kegiatan' => 'Orientasi Divisi TI',
             'deskripsi_kegiatan' => 'Orientasi divisi TI dan pengenalan arsitektur jaringan kantor PLN UP3 Jambi.',
         ]);
-
-        Logbooks::create([
-            'internship_id' => $internship->id,
-            'date' => '2026-09-02',
-            'jam_mulai' => '08:00:00',
-            'jam_selesai' => '16:00:00',
-            'nama_kegiatan' => 'Maintenance Server Lokal',
-            'deskripsi_kegiatan' => 'Membantu maintenance server lokal dan monitoring traffic data harian.',
-        ]);
+        for ($i = 0; $i < 20; $i++) {
+            # code...
+            Logbooks::create([
+                'internship_id' => $internship->id,
+                'date' => '2026-09-' . str_pad($i + 1, 2, '0', STR_PAD_LEFT),
+                'jam_mulai' => '08:00:00',
+                'jam_selesai' => '16:00:00',
+                'nama_kegiatan' => 'Maintenance Server Lokal',
+                'deskripsi_kegiatan' => 'Membantu maintenance server lokal dan monitoring traffic data harian.',
+                'status' => 'approved'
+            ]);
+            Attendances::create([
+                'internship_id' => $internship->id,
+                'date' => '2026-08-' . str_pad($i + 1, 2, '0', STR_PAD_LEFT),
+                'check_in' => '07:45:00',
+                'check_out' => '16:30:00',
+                'status' => 'hadir',
+            ]);
+        }
     }
 }
