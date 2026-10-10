@@ -81,8 +81,8 @@
                         class="text-[#2F698B] text-center text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-tight sm:tracking-wide h-8 flex items-center justify-center leading-tight">Jumlah
                         Pemagang Saat Ini</span>
                     <div
-                        class="bg-linear-to-br from-[#2F698B] to-[#1F4961] w-full max-w-[120px] sm:max-w-[140px] aspect-square rounded-xl sm:rounded-2xl shadow-lg flex flex-col justify-center items-center group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300">
-                        <span class="font-extrabold text-3xl sm:text-4xl md:text-5xl text-white">10</span>
+                        class="bg-linear-to-br from-[#2F698B] to-[#1F4961] w-full max-w-30 sm:max-w-35 aspect-square rounded-xl sm:rounded-2xl shadow-lg flex flex-col justify-center items-center group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300">
+                        <span class="font-extrabold text-3xl sm:text-4xl md:text-5xl text-white">{{ $totalPemagang }}</span>
                         <p class="font-medium text-[10px] sm:text-xs md:text-sm text-white/80 mt-1">Orang</p>
                     </div>
                 </div>
@@ -177,204 +177,179 @@
             {{-- Accordion --}}
             <div class="space-y-4">
 
-                <!-- A. Pakaian dan Penampilan -->
+                <!-- A. Persiapan Berkas Administrasi -->
                 <div
                     class="collapse collapse-arrow rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-[#54B79A]/50 transition-all duration-300">
                     <input type="radio" name="my-accordion-2" checked="checked" />
                     <div class="collapse-title font-bold text-[#2F698B] text-base md:text-lg flex items-center gap-3 py-4">
                         <span
                             class="flex items-center justify-center w-8 h-8 rounded-lg bg-[#54B79A]/10 text-[#54B79A]">A</span>
-                        Pakaian dan Penampilan
+                        Persiapan Berkas Administrasi
                     </div>
-                    <div class="collapse-content text-slate-600 text-sm space-y-4">
-                        <!-- Grid Card Jadwal Pakaian -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div
-                                class="p-4 bg-slate-50 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors">
-                                <span
-                                    class="inline-block px-3 py-1 text-xs font-bold text-teal-800 bg-teal-100 rounded-lg mb-2">Senin</span>
-                                <p class="text-sm text-slate-600 leading-relaxed">Kemeja putih dengan celana panjang/rok
-                                    kain berwarna hitam.</p>
-                            </div>
-
-                            <div
-                                class="p-4 bg-slate-50 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors">
-                                <span
-                                    class="inline-block px-3 py-1 text-xs font-bold text-teal-800 bg-teal-100 rounded-lg mb-2">Selasa</span>
-                                <p class="text-sm text-slate-600 leading-relaxed">Pakaian kemeja atau blus bernuansa warna
-                                    biru.</p>
-                            </div>
-
-                            <div
-                                class="p-4 bg-slate-50 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors">
-                                <span
-                                    class="inline-block px-3 py-1 text-xs font-bold text-teal-800 bg-teal-100 rounded-lg mb-2">Rabu
-                                    & Kamis</span>
-                                <p class="text-sm text-slate-600 leading-relaxed">Pakaian bebas, rapi, dan sopan
-                                    (diperbolehkan menggunakan kemeja atau kaos berkerah/polo shirt). Tidak diperkenankan
-                                    menggunakan kaos oblong atau celana jeans yang robek.</p>
-                            </div>
-
-                            <div
-                                class="p-4 bg-slate-50 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors">
-                                <span
-                                    class="inline-block px-3 py-1 text-xs font-bold text-teal-800 bg-teal-100 rounded-lg mb-2">Jum'at</span>
-                                <p class="text-sm text-slate-600 leading-relaxed">Pakaian olahraga (apabila terdapat
-                                    kegiatan senam/jalan santai pada pagi hari) atau pakaian formal/batik (apabila tidak ada
-                                    jadwal kegiatan olahraga).</p>
-                            </div>
-                        </div>
-
-                        <!-- Tanda Pengenal -->
-                        <div
-                            class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-900 flex flex-col sm:flex-row items-start gap-3 mt-2">
-                            <div class="p-2 bg-amber-100 rounded-lg text-amber-700 shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 6a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0V6a.5.5 0 00-.5-.5h-7a.5.5 0 00-.5.5v2a.5.5 0 00.5.5h7a.5.5 0 00.5-.5V6z"
-                                        clip-rule="evenodd" />
-                                    <path d="M10 13a1 1 0 100-2 1 1 0 000 2zM9 16a1 1 0 112 0 1 1 0 01-2 0z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <span class="font-bold block mb-1">Tanda Pengenal:</span>
-                                <span>Wajib mengenakan ID Card / Tanda Pengenal Magang selama berada di area
-                                    instansi.</span>
-                            </div>
-                        </div>
+                    <div class="collapse-content text-slate-600 text-sm">
+                        <ul class="space-y-3 leading-relaxed">
+                            <li class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
+                                <span>Surat Pengantar / Izin Magang resmi dari Sekolah/Kampus.</span>
+                            </li>
+                            <li class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
+                                <span>Proposal Pengajuan Magang (berisi latar belakang, jurusan, dan periode magang yang
+                                    diajukan).</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-                <!-- B. Kehadiran dan Waktu Kerja -->
+                <!-- B. Pengisian Formulir Pengajuan -->
                 <div
                     class="collapse collapse-arrow rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-[#54B79A]/50 transition-all duration-300">
                     <input type="radio" name="my-accordion-2" />
                     <div class="collapse-title font-bold text-[#2F698B] text-base md:text-lg flex items-center gap-3 py-4">
                         <span
                             class="flex items-center justify-center w-8 h-8 rounded-lg bg-[#54B79A]/10 text-[#54B79A]">B</span>
-                        Kehadiran dan Waktu Kerja
+                        Pengisian Formulir Pengajuan
                     </div>
-                    <div class="collapse-content">
-                        <ul class="space-y-3 text-sm text-slate-600 leading-relaxed">
-                            <li
-                                class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors">
+                    <div class="collapse-content text-slate-600 text-sm">
+                        <ul class="space-y-3 leading-relaxed">
+                            <li class="flex items-start gap-3">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
-                                <span>Peserta magang wajib mematuhi jam kerja instansi (misal: Senin - Jumat, pukul 07.30
-                                    s.d. 16.30 WIB).</span>
+                                <span>Buka halaman utama portal pendaftaran magang.</span>
                             </li>
-                            <li
-                                class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors">
+                            <li class="flex items-start gap-3">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
-                                <span>Wajib melakukan presensi (absen masuk dan absen pulang) setiap hari kerja melalui
-                                    sistem aplikasi yang telah disediakan.</span>
+                                <span>Klik tombol <strong>"Ajukan Magang" / "Daftar Sekarang"</strong>.</span>
                             </li>
-                            <li
-                                class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors">
+                            <li class="flex items-start gap-3">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
-                                <span>Apabila berhalangan hadir (sakit atau izin), peserta wajib menginformasikan kepada
-                                    Mentor/Pembimbing lapangan dan mengunggah surat keterangan yang sah melalui
-                                    sistem.</span>
+                                <div class="w-full">
+                                    <span class="block mb-2">Isi data diri secara lengkap:</span>
+                                    <div class="bg-slate-50 border border-slate-100 p-3.5 rounded-xl space-y-1.5 w-full">
+                                        <p>1. Nama Lengkap, NIM/NISN.</p>
+                                        <p>2. Asal Instansi/Universitas/Sekolah dan Jurusan.</p>
+                                        <p>3. Rencana Periode Magang (Tanggal Mulai s.d. Tanggal Selesai).</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
+                                <span>Unggah seluruh dokumen persyaratan yang diminta pada kolom yang tersedia.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
+                                <span>Periksa kembali data Anda, lalu klik <strong>"Kirim Pengajuan"</strong>.</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- C. Tugas dan Evaluasi -->
+                <!-- C. Simpan Nomor Pengajuan -->
                 <div
                     class="collapse collapse-arrow rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-[#54B79A]/50 transition-all duration-300">
                     <input type="radio" name="my-accordion-2" />
                     <div class="collapse-title font-bold text-[#2F698B] text-base md:text-lg flex items-center gap-3 py-4">
                         <span
                             class="flex items-center justify-center w-8 h-8 rounded-lg bg-[#54B79A]/10 text-[#54B79A]">C</span>
-                        Tugas dan Evaluasi
+                        Simpan Nomor Pengajuan
                     </div>
-                    <div class="collapse-content">
-                        <ul class="space-y-3 text-sm text-slate-600 leading-relaxed">
-                            <li
-                                class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors">
-                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
-                                <span>Peserta wajib mengisi Logbook atau catatan kegiatan harian di sistem secara rutin
-                                    sebagai bukti pelaksanaan tugas.</span>
-                            </li>
-                            <li
-                                class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors">
-                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
-                                <span>Menjalankan setiap tugas yang diberikan oleh Mentor dengan penuh tanggung jawab,
-                                    jujur, dan disiplin.</span>
-                            </li>
-                            <li
-                                class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors">
-                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
-                                <span>Wajib berkonsultasi dan melapor kepada Mentor terkait perkembangan project atau
-                                    kendala yang dihadapi di lapangan.</span>
-                            </li>
-                        </ul>
+                    <div class="collapse-content text-slate-600 text-sm">
+                        <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3 mb-3">
+                            <div class="mt-0.5 shrink-0 text-amber-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="leading-relaxed">
+                                Setelah berhasil mengirim formulir, sistem akan menampilkan <strong>Nomor Pengajuan
+                                    Unik</strong> (contoh: <span
+                                    class="font-mono text-amber-700 bg-amber-100/50 px-1.5 py-0.5 rounded">PLN-REG-2026-0812</span>).
+                                Wajib simpan atau catat nomor tersebut untuk memantau status seleksi berkas Anda.
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- D. Perilaku dan Etika -->
+                <!-- D. Seleksi & Pengecekan Status -->
                 <div
                     class="collapse collapse-arrow rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-[#54B79A]/50 transition-all duration-300">
                     <input type="radio" name="my-accordion-2" />
                     <div class="collapse-title font-bold text-[#2F698B] text-base md:text-lg flex items-center gap-3 py-4">
                         <span
                             class="flex items-center justify-center w-8 h-8 rounded-lg bg-[#54B79A]/10 text-[#54B79A]">D</span>
-                        Perilaku dan Etika
+                        Seleksi & Pengecekan Status
                     </div>
-                    <div class="collapse-content">
-                        <ul class="space-y-3 text-sm text-slate-600 leading-relaxed">
-                            <li
-                                class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors">
+                    <div class="collapse-content text-slate-600 text-sm">
+                        <ul class="space-y-3 leading-relaxed">
+                            <li class="flex items-start gap-3">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
-                                <span>Menjaga nama baik almamater (sekolah/kampus) dan instansi tempat magang.</span>
+                                <span>Proses verifikasi dan peninjauan berkas oleh tim SDM/Admin membutuhkan waktu 3-7 hari
+                                    kerja.</span>
                             </li>
-                            <li
-                                class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors">
+                            <li class="flex items-start gap-3">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
-                                <span>Menerapkan budaya kerja yang ramah dan sopan (Senyum, Sapa, Salam) kepada seluruh
-                                    pegawai instansi dan sesama peserta magang.</span>
-                            </li>
-                            <li
-                                class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition-colors">
-                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
-                                <span>Menjaga kebersihan, kerapian, dan keamanan fasilitas peralatan kantor yang
-                                    digunakan.</span>
+                                <div class="w-full">
+                                    <span class="block mb-2">Calon peserta dapat memantau hasil seleksi secara berkala
+                                        dengan cara:</span>
+                                    <div class="bg-slate-50 border border-slate-100 p-3.5 rounded-xl space-y-1.5 w-full">
+                                        <p>1. Buka menu <strong>"Cek Status Pendaftaran"</strong>.</p>
+                                        <p>2. Masukkan Nomor Pengajuan Anda, lalu klik <strong>"Cek Status"</strong>.</p>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- E. Kerahasiaan Informasi -->
+                <!-- E. Token & Registrasi Akun -->
                 <div
-                    class="collapse collapse-arrow rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-rose-500/50 transition-all duration-300">
+                    class="collapse collapse-arrow rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-[#54B79A]/50 transition-all duration-300">
                     <input type="radio" name="my-accordion-2" />
                     <div class="collapse-title font-bold text-[#2F698B] text-base md:text-lg flex items-center gap-3 py-4">
                         <span
-                            class="flex items-center justify-center w-8 h-8 rounded-lg bg-rose-100 text-rose-600">E</span>
-                        Kerahasiaan Informasi
+                            class="flex items-center justify-center w-8 h-8 rounded-lg bg-[#54B79A]/10 text-[#54B79A]">E</span>
+                        Token & Registrasi Akun
                     </div>
-                    <div class="collapse-content">
-                        <div
-                            class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-900 flex items-start gap-3">
-                            <div class="mt-0.5 shrink-0 text-rose-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    <div class="collapse-content text-slate-600 text-sm">
+                        <ul class="space-y-3 leading-relaxed">
+                            <li class="flex items-start gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
+                                <span>Jika status pengajuan dinyatakan <strong>"Diterima"</strong>, sistem akan menampilkan
+                                    ucapan selamat beserta Token Aktivasi Khusus.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
+                                <span>Klik tombol <strong>"Registrasi Akun"</strong> yang muncul di layar.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
+                                <div class="w-full">
+                                    <span class="block mb-2">Lakukan pembuatan akun magang dengan mengisi:</span>
+                                    <div class="bg-slate-50 border border-slate-100 p-3.5 rounded-xl space-y-1.5 w-full">
+                                        <p>1. Email aktif.</p>
+                                        <p>2. Password baru.</p>
+                                        <p>3. Token Aktivasi yang telah didapatkan sebelumnya.</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li
+                                class="flex items-start gap-3 p-3.5 rounded-xl bg-teal-50 border border-teal-100 text-teal-900 mt-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 text-teal-600"
+                                    viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
                                 </svg>
-                            </div>
-                            <div>
-                                <span class="font-bold block mb-1">Perhatian:</span>
-                                <span class="leading-relaxed">Peserta dilarang keras menyebarluaskan dokumen, data
-                                    internal, atau informasi yang bersifat rahasia milik instansi ke pihak luar tanpa izin
-                                    tertulis dari Mentor atau pimpinan instansi.</span>
-                            </div>
-                        </div>
+                                <span>Setelah akun berhasil dibuat, silakan Login untuk mengakses Dashboard peserta,
+                                    melakukan presensi harian, dan mengisi logbook kegiatan.</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-            </div>
+            </div> 
         </div>
     </section>
 @endsection
