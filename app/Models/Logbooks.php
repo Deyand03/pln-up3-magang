@@ -13,10 +13,11 @@ class Logbooks extends Model
     protected $fillable = [
         'internship_id',
         'date',
-        'activity_description',
-        'file_proof',
-        'approval_status',
-        'mentor_notes',
+        'jam_mulai',
+        'jam_selesai',
+        'nama_kegiatan',
+        'deskripsi_kegiatan',
+        'status',
     ];
 
     public function internship(): BelongsTo
