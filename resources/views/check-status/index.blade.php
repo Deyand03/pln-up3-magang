@@ -2,38 +2,38 @@
 @section('title', 'Cek Status Pengajuan Magang')
 
 @section('content')
-    <!-- TOASTER NOTIFIKASI BERHASIL (Top-Right Fixed) -->
+    {{-- Notifikasi Toaster --}}
     @if (session('success'))
-    <div id="toast-success"
-        class="fixed top-5 right-5 z-50 max-w-sm w-full bg-white text-white p-4 rounded-2xl shadow-2xl border border-teal-500/30 flex items-start gap-3 transform transition-all duration-300 animate-slide-in">
-        <div class="w-8 h-8 rounded-xl bg-teal-500/20 border border-teal-500/40 text-teal-400 flex items-center justify-center shrink-0 mt-0.5">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-            </svg>
+        <div id="toast-success"
+            class="fixed top-5 right-5 z-50 max-w-sm w-full bg-white text-white p-4 rounded-2xl shadow-2xl border border-teal-500/30 flex items-start gap-3 transform transition-all duration-300 animate-slide-in">
+            <div
+                class="w-8 h-8 rounded-xl bg-teal-500/20 border border-teal-500/40 text-teal-400 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <div class="flex-1 pr-2">
+                <h4 class="text-xs font-bold text-teal-400">Pengajuan Berhasil!</h4>
+                <p class="text-[11px] text-slate-700 mt-0.5 leading-snug">
+                    {{ session('success') }}
+                </p>
+            </div>
+            <button onclick="dismissToast()" class="text-slate-400 hover:text-black p-1 rounded-lg transition-colors">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
-        <div class="flex-1 pr-2">
-            <h4 class="text-xs font-bold text-teal-400">Pengajuan Berhasil!</h4>
-            <p class="text-[11px] text-slate-700 mt-0.5 leading-snug">
-                {{ session('success') }}
-            </p>
-        </div>
-        <button onclick="dismissToast()" class="text-slate-400 hover:text-black p-1 rounded-lg transition-colors">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-    </div>
     @endif
 
     <div class="min-h-[85vh] flex justify-center items-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50/50">
         <div
             class="w-full md:max-w-xl max-w-md bg-white rounded-2xl p-6 sm:p-8 shadow-xl shadow-slate-200/60 border border-slate-200/80 text-center relative overflow-hidden transition-all">
 
-            <!-- Glow Accent Header -->
             <div class="absolute -top-12 -left-12 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl pointer-events-none"></div>
-            <div class="absolute -top-12 -right-12 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none">
+            </div>
 
-            <!-- Header Icon -->
             <div
                 class="w-14 h-14 rounded-2xl bg-linear-to-br from-teal-500 to-teal-700 text-white flex items-center justify-center mx-auto mb-4 shadow-lg shadow-teal-600/20 shrink-0">
                 <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -51,12 +51,11 @@
             </p>
 
 
-            <!-- Alert Not Found / Error -->
+            {{-- Notifikasi jika no reg tidak ditemukan --}}
             @if (session('notFound'))
                 <div
                     class="my-4 p-3.5 bg-rose-50 border border-rose-200/90 rounded-xl text-left flex items-start gap-3 animate-fade-in">
-                    <svg class="w-5 h-5 text-rose-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
+                    <svg class="w-5 h-5 text-rose-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -66,16 +65,20 @@
                 </div>
             @endif
 
-            <!-- Form Pencarian Status -->
+            {{-- Form Pencarian Status --}}
             <form action="{{ route('check-status.check') }}" method="GET" class="mt-6 space-y-3">
                 <div class="text-left">
                     @if (session('registration_number'))
-                        <div class="mb-3 p-3 bg-teal-50/90 border border-teal-200 rounded-xl flex items-center justify-between text-xs">
+                        <div
+                            class="mb-3 p-3 bg-teal-50/90 border border-teal-200 rounded-xl flex items-center justify-between text-xs">
                             <div class="flex items-center gap-2 pr-2 overflow-hidden">
-                                <span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-teal-600 text-white font-bold text-[10px] shrink-0">📋</span>
+                                <span
+                                    class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-teal-600 text-white font-bold text-[10px] shrink-0">📋</span>
                                 <div class="truncate">
-                                    <span class="text-[10px] text-teal-800 font-bold block leading-tight">Nomor Pendaftaran Anda:</span>
-                                    <span class="font-mono font-extrabold text-teal-950 text-xs sm:text-sm tracking-wider select-all truncate block">
+                                    <span class="text-[10px] text-teal-800 font-bold block leading-tight">Nomor Pendaftaran
+                                        Anda:</span>
+                                    <span
+                                        class="font-mono font-extrabold text-teal-950 text-xs sm:text-sm tracking-wider select-all truncate block">
                                         {{ session('registration_number') }}
                                     </span>
                                 </div>
@@ -97,8 +100,7 @@
                     </label>
                     <div class="relative">
                         <input type="text" name="registration_number" id="registration_number"
-                            value="{{ request('registration_number') }}"
-                            placeholder="Contoh: PLN-MG-20260921-A1B2" required
+                            value="{{ request('registration_number') }}" placeholder="Contoh: PLN-MG-20260921-A1B2" required
                             class="w-full text-xs font-mono uppercase tracking-wider px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 transition-all placeholder:text-slate-400 placeholder:normal-case placeholder:tracking-normal font-semibold text-slate-800" />
 
                         @if (request('registration_number'))
@@ -120,8 +122,8 @@
                 </button>
             </form>
 
+            {{-- Menampilkan Status Dokumen --}}
             @if ($application ?? null)
-                <!-- Badge Overview Status -->
                 <div class="mt-6 pt-5 border-t border-slate-100">
                     <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider block mb-2">Status Saat
                         Ini</span>
@@ -152,7 +154,8 @@
                                         {{ $application->registration_token }}
                                     </div>
                                     <p class="text-[10px] text-emerald-700">Kuota: {{ $application->token_used }} /
-                                        {{ $application->token_quota }} Akun Terdaftar</p>
+                                        {{ $application->token_quota }} Akun Terdaftar
+                                    </p>
                                 </div>
                             @endif
                         </div>
@@ -160,8 +163,7 @@
                         <div
                             class="bg-rose-50 border border-rose-200/80 rounded-xl py-3 px-4 text-rose-800 text-xs font-bold shadow-xs w-full text-left">
                             <div class="flex items-center gap-2 mb-1">
-                                <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                                <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                                         d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -177,8 +179,7 @@
                         <div
                             class="bg-yellow-50 border border-yellow-200/80 rounded-xl py-3 px-4 text-yellow-800 text-xs font-bold shadow-xs w-full text-left">
                             <div class="flex items-center gap-2 mb-1">
-                                <svg class="w-4 h-4 text-yellow-600 shrink-0" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                                <svg class="w-4 h-4 text-yellow-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                                         d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -193,11 +194,10 @@
                     @endif
                 </div>
 
-                <!-- Dynamic Vertical Status Stepper -->
+                {{-- Menampikan Timeline Status Dokumen --}}
                 <div
                     class="mt-6 text-left space-y-4 relative before:absolute before:left-3.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-slate-200">
-
-                    <!-- Step 1: Dokumen Diajukan (Selalu Done) -->
+                    {{-- Dokumen Diajukan --}}
                     <div class="relative flex items-start gap-3">
                         <div
                             class="w-7 h-7 rounded-full bg-teal-600 text-white flex items-center justify-center shrink-0 z-10 text-xs font-bold ring-4 ring-white shadow-xs">
@@ -214,7 +214,7 @@
                         </div>
                     </div>
 
-                    <!-- Step 2: Verifikasi Dokumen -->
+                    {{-- Verifikasi Dokumen --}}
                     <div class="relative flex items-start gap-3">
                         @if ($application->status === 'pending')
                             <div
@@ -239,7 +239,7 @@
                         @endif
                     </div>
 
-                    <!-- Step 3: Hasil Keputusan -->
+                    {{-- Hasil Keputusan --}}
                     <div class="relative flex items-start gap-3">
                         @if ($application->status === 'pending')
                             <div
@@ -284,16 +284,17 @@
                     </div>
                 </div>
                 @if ($application->status === 'approved')
-                <div class="flex justify-center pt-3">
-                    <a href="{{ route('register') }}" class="bg-teal-600 py-3 text-xs tracking- text-white font-bold rounded-xl w-full shadow hover:shadow-lg shadow-teal-500/30 hover:bg-teal-700 active:scale-95 duration-300 transition-all transform-gpu">
-                        Buat Akun
-                    </a>
+                    <div class="flex justify-center pt-3">
+                        <a href="{{ route('register') }}"
+                            class="bg-teal-600 py-3 text-xs tracking- text-white font-bold rounded-xl w-full shadow hover:shadow-lg shadow-teal-500/30 hover:bg-teal-700 active:scale-95 duration-300 transition-all transform-gpu">
+                            Buat Akun
+                        </a>
 
-                </div>
+                    </div>
                 @endif
             @else
-                <!-- Default State: Belum Mencari Status -->
-                <div class="mt-8 pt-4 border-t border-slate-100 text-slate-400 text-[11px]">
+            {{-- Default State --}}
+            <div class="mt-8 pt-4 border-t border-slate-100 text-slate-400 text-[11px]">
                     <p class="flex items-center justify-center gap-1.5">
                         <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -306,8 +307,7 @@
             @endif
         </div>
     </div>
-
-    <!-- SCRIPT COPY TO CLIPBOARD & TOAST AUTO-DISMISS -->
+@push('scripts')
     <script>
         function copyRegNumber(text, btn) {
             if (navigator.clipboard && window.isSecureContext) {
@@ -327,11 +327,11 @@
             // Visual feedback pada tombol salin
             const originalHTML = btn.innerHTML;
             btn.innerHTML = `
-                <svg class="w-3.5 h-3.5 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-                </svg>
-                <span>Tersalin!</span>
-            `;
+                            <svg class="w-3.5 h-3.5 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Tersalin!</span>
+                        `;
             btn.classList.remove('bg-teal-600', 'hover:bg-teal-700');
             btn.classList.add('bg-emerald-700');
 
@@ -358,4 +358,5 @@
             }, 5000);
         });
     </script>
+@endpush
 @endsection
