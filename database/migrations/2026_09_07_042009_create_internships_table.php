@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->foreignId('application_id')->constrained('applications')->cascadeOnDelete();
             $table->string('nim_nisn');
             $table->string('department')->nullable();
+            $table->string('foto_profil')->nullable();
             $table->enum('status', ['active', 'completed', 'terminated'])->default('active');
             $table->timestamps();
         });
