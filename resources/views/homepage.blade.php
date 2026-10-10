@@ -194,7 +194,7 @@
                             </li>
                             <li class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#54B79A] mt-1.5 shrink-0 shadow-sm"></span>
-                                <span>Proposal Pengajuan Magang (berisi latar belakang, jurusan, dan periode magang yang
+                                <span>Proposal Pengajuan Magang (berisi latar belakang, program studi, dan periode magang yang
                                     diajukan).</span>
                             </li>
                         </ul>
@@ -226,7 +226,7 @@
                                     <span class="block mb-2">Isi data diri secara lengkap:</span>
                                     <div class="bg-slate-50 border border-slate-100 p-3.5 rounded-xl space-y-1.5 w-full">
                                         <p>1. Nama Lengkap, NIM/NISN.</p>
-                                        <p>2. Asal Instansi/Universitas/Sekolah dan Jurusan.</p>
+                                        <p>2. Asal Instansi/Universitas/Sekolah dan program studi.</p>
                                         <p>3. Rencana Periode Magang (Tanggal Mulai s.d. Tanggal Selesai).</p>
                                     </div>
                                 </div>
@@ -349,7 +349,7 @@
                     </div>
                 </div>
 
-            </div> 
+            </div>
         </div>
     </section>
 @endsection
