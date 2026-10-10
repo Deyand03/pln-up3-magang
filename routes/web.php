@@ -6,6 +6,7 @@ use App\Http\Controllers\FormpengajuanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\LogbookController;
+use App\Http\Controllers\ProfilInternController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
@@ -21,8 +22,9 @@ Route::middleware(['auth', 'role:intern'])->group(function () {
     Route::get('/dashboard-intern', [InternController::class, 'index'])->name('dashboard-intern');
     Route::get('/dashboard-intern/download-surat-selesai', [InternController::class, 'downloadSuratSelesai'])
         ->name('intern.download-surat-selesai');
-    Route::get('/profile-intern', [InternController::class, 'profile'])->name('profile-intern');
-    Route::patch('/profile-intern/edit', [InternController::class, 'edit'])->name('profile-intern.edit');
+
+    Route::get('/profile-intern', [ProfilInternController::class, 'index'])->name('profile-intern');
+    Route::patch('/profile-intern/edit', [ProfilInternController::class, 'editBiodata'])->name('profile-intern.editBio');
 
     Route::get('/presensi-intern', [AttendancesController::class, 'index'])->name('presensi-intern');
     Route::post('/presensi-intern', [AttendancesController::class, 'store'])->name('presensi-intern.store');
