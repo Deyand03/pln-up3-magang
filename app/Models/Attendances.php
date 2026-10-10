@@ -15,8 +15,16 @@ class Attendances extends Model
         'date',
         'check_in',
         'check_out',
+        'latitude_in',
+        'longitude_in',
+        'latitude_out',
+        'longitude_out',
+        'distance_in',
+        'distance_out',
+        'surat_izin',
         'status',
         'notes',
+        'is_valid',
     ];
 
     public function internship(): BelongsTo
