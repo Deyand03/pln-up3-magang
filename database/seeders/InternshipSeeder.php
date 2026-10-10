@@ -23,9 +23,8 @@ class InternshipSeeder extends Seeder
                 'user_id' => $internUser->id,
                 'mentor_id' => $mentorUser?->id,
                 'application_id' => $application->id,
+                'nim_nisn' => $application->nim_nisn,
                 'department' => 'K3 & Lingkungan',
-                'start_date' => '2026-09-01',
-                'end_date' => '2026-11-30',
                 'status' => 'active',
             ]);
         }
