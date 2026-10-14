@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('role', ['intern', 'hrd', 'mentor'])->default('intern');
             $table->string('phone')->nullable();
+            $table->string('foto_profil')->nullable();
+            $table->enum('role', ['intern', 'hrd', 'mentor'])->default('intern');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
