@@ -6,6 +6,7 @@ use App\Http\Controllers\FormpengajuanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\LogbookController;
+use App\Http\Controllers\MentorController;
 use App\Http\Controllers\ProfilInternController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::middleware(['auth', 'role:intern'])->group(function () {
 
     Route::get('/profile-intern', [ProfilInternController::class, 'index'])->name('profile-intern');
     Route::patch('/profile-intern/edit', [ProfilInternController::class, 'editBiodata'])->name('profile-intern.editBio');
+    Route::patch('/profile-intern/edit-foto', [ProfilInternController::class, 'editFoto'])->name('profile-intern.editFoto');
 
     Route::get('/presensi-intern', [AttendancesController::class, 'index'])->name('presensi-intern');
     Route::post('/presensi-intern', [AttendancesController::class, 'store'])->name('presensi-intern.store');
@@ -33,6 +35,14 @@ Route::middleware(['auth', 'role:intern'])->group(function () {
     Route::get('/logbook-intern', [LogbookController::class, 'index'])->name('logbook-intern');
     Route::post('/logbook-intern', [LogbookController::class, 'store'])->name('logbook-intern.store');
     Route::patch('/logbook-intern/update/{id}', [LogbookController::class, 'update'])->name('logbook-intern.update');
+});
+
+Route::middleware(['auth', 'role:mentor'])->group(function () {
+    Route::get('/dashboard-mentor', [MentorController::class, 'index'])->name('dashboard-mentor');
+    Route::get('/dashboard-mentor/internship/{id}', [MentorController::class, 'showInternshipDetails'])->name('mentor.internship.details');
+    Route::patch('/dashboard-mentor/internship/toggle-status-logbook/{id}', [MentorController::class, 'toggleLogbookStatus'])->name('mentor.internship.toggleStatus');
+
+    Route::get('/dashboard-mentor/profile', [MentorController::class, 'profile'])->name('profile-mentor');
 });
 
 require __DIR__.'/auth.php';
