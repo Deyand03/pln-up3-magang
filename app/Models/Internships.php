@@ -22,6 +22,11 @@ class Internships extends Model
     ];
 
 
+    public function attendanceToday()
+    {
+        return $this->hasOne(Attendances::class, 'internship_id')->whereDate('date', today());
+    }
+
     // Function BelongsTo
     public function user(): BelongsTo
     {
