@@ -38,17 +38,17 @@ class Internships extends Model
     }
     public function applications(): BelongsTo
     {
-        return $this->belongsTo(Applications::class);
+        return $this->belongsTo(Applications::class, 'application_id');
     }
 
     // Function HasTo
     public function attendances(): HasMany
     {
-        return $this->hasMany(Attendances::class);
+        return $this->hasMany(Attendances::class, 'internship_id', 'id');
     }
     public function logbooks(): HasMany
     {
-        return $this->hasMany(Logbooks::class);
+        return $this->hasMany(Logbooks::class, 'internship_id', 'id');
     }
     public function evaluation(): HasOne
     {
