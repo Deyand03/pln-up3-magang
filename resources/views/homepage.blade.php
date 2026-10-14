@@ -3,7 +3,7 @@
 @section('content')
     {{-- ========== HERO SECTION ========== --}}
     <section
-        class="relative bg-linear-to-b from-[#54B79A] to-[#2F698B] pt-16 overflow-hidden min-h-screen flex flex-col justify-between">
+        class="relative bg-linear-to-b from-[#54B79A] to-[#2F698B] overflow-hidden min-h-screen flex flex-col justify-between">
 
         {{-- Background Decorative Image (Desktop Overlay) --}}
         <img src="{{ asset('img/footer_hero.png') }}" alt=""
