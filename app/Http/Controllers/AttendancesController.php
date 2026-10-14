@@ -47,7 +47,7 @@ class AttendancesController extends Controller
 
         $presensi = Attendances::where('internship_id', $internId)
             ->orderBy('date', 'desc')
-            ->paginate();
+            ->paginate(10);
 
         if($request->ajax()){
             return view('intern-dashboard.partials.list-presensi', compact('presensi'))->render();
