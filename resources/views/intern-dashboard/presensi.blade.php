@@ -417,6 +417,7 @@
         const hasCheckedIn = {{ $hasCheckedIn ? 'true' : 'false' }};
         const hasCheckedOut = {{ $hasCheckedOut ? 'true' : 'false' }};
         const isIzinSakitAlfaToday = {{ $isIzinSakitAlfaToday ?? false ? 'true' : 'false' }};
+        const todayAttendance = @json($todayAttendance ?? null);
 
         // Koordinat Kantor PLN UP3 Jambi
         const OFFICE_LAT = -1.607712;
@@ -497,9 +498,15 @@
 
                     // Check Validity
                     if (isIzinSakitAlfaToday) {
-                        badge.className =
-                            "text-[10px] px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 font-bold border border-sky-20 ";
-                        badge.textContent = 'Tercatat Izin/Sakit Hari Ini';
+                        if(todayAttendance.status == 'alfa') {
+                            badge.textContent = 'Tercatat Alfa Hari Ini';
+                            badge.className =
+                                "text-[10px] px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold border border-rose-20 ";
+                        } else {
+                            badge.className =
+                                "text-[10px] px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 font-bold border border-sky-20 ";
+                            badge.textContent = 'Tercatat Izin/Sakit Hari Ini';
+                        }
                         btnCheckin.disabled = true;
                     } else if (distanceMeters <= MAX_RADIUS_METERS) {
                         badge.className =
@@ -661,7 +668,7 @@
             window.addEventListener('popstate', function() {
                 fetchData(window.location.href, false);
             });
-            
+
             initMap();
             setInterval(updateClock, 1000);
             updateClock();
