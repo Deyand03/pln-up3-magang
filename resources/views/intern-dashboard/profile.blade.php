@@ -1,8 +1,8 @@
 @extends('layouts.base')
 @section('title', 'Profile')
 @section('content')
-    <div class="font-sans antialiased text-slate-800 bg-slate-50/80 min-h-screen flex flex-col selection:bg-teal-500 selection:text-white pb-16"
-        x-data="{ foto_profil: {{ Auth::user()->internship->foto_profil ?? null }} }">
+    <div
+        class="font-sans antialiased text-slate-800 bg-slate-50/80 min-h-screen flex flex-col selection:bg-teal-500 selection:text-white pb-16">
         {{-- Main Profil Container --}}
         <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
             {{-- Notifikasi --}}
@@ -40,7 +40,7 @@
                             <div
                                 class="w-full h-full rounded-2xl bg-slate-100 border-4 border-white shadow-lg overflow-hidden flex items-center justify-center">
                                 @if(Auth::user()->foto_profil ?? false)
-                                    <img src="{{ asset(Auth::user()->foto_profil) }}" alt="Foto"
+                                    <img src="{{ Storage::url(Auth::user()->foto_profil) }}" alt="Foto"
                                         class="w-full h-full object-cover">
                                 @else
                                     <span
@@ -50,7 +50,7 @@
 
                             <button
                                 class="absolute -bottom-2 -right-2 w-10 h-10 bg-amber-400 hover:bg-amber-500 text-amber-900 rounded-full border-4 border-white shadow-md flex items-center justify-center transition-transform active:scale-95"
-                                title="Ubah Foto Profil">
+                                title="Ubah Foto Profil" popovertarget="my_modal_2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pen-fill" viewBox="0 0 16 16">
                                     <path
@@ -65,9 +65,8 @@
                             {{ Auth::user()->internship->department ?? 'N/A' }}
                         </p>
 
-                        <div class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold
-                                            {{ Auth::user()->internship->status == 'active' ? 'bg-emerald-50 border border-emerald-100 text-emerald-700' : 'bg-rose-50 border border-rose-100 text-rose-700' }}
-                                        ">
+                        <div
+                            class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold {{ Auth::user()->internship->status == 'active' ? 'bg-emerald-50 border border-emerald-100 text-emerald-700' : 'bg-rose-50 border border-rose-100 text-rose-700' }}">
                             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                             Status Magang: {{ Auth::user()->internship->status == 'active' ? 'Aktif' : 'Selesai' }}
                         </div>
@@ -142,7 +141,7 @@
                                 <div>
                                     <label class="block text-[11px] font-bold text-slate-700 mb-1.5">NIM / NISN</label>
                                     <input type="text" name="nim_nisn" value="{{ Auth::user()->internship->nim_nisn }}"
-                                        class="w-full text-xs px-3.5 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 transition-all font-mono font-bold text-slate-800"
+                                        class="w-full text-xs px-3.5 py-3 uppercase rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 transition-all font-mono font-bold text-slate-800"
                                         readonly>
                                 </div>
 
@@ -235,14 +234,17 @@
                                 @method('PUT')
 
                                 <div>
-                                    <label class="block text-[10px] font-bold text-slate-700 mb-1" for="password">Password Baru</label>
+                                    <label class="block text-[10px] font-bold text-slate-700 mb-1" for="password">Password
+                                        Baru</label>
                                     <input type="password" id="password" name="password" placeholder="Minimal 8 karakter"
                                         class="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 transition-all font-medium">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-bold text-slate-700 mb-1" for="password_confirmation">Konfirmasi Password
+                                    <label class="block text-[10px] font-bold text-slate-700 mb-1"
+                                        for="password_confirmation">Konfirmasi Password
                                         Baru</label>
-                                    <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Ulangi password"
+                                    <input type="password" id="password_confirmation" name="password_confirmation"
+                                        placeholder="Ulangi password"
                                         class="w-full text-xs px-3 py-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 transition-all font-medium">
                                 </div>
 
@@ -271,13 +273,12 @@
                             </button>
                         </form>
                     </div>
-
                 </div>
             </div>
         </main>
     </div>
 
-    <dialog id="modal_ubah_foto" class="modal modal-bottom sm:modal-middle">
+    <div id="my_modal_2" class="modal modal-bottom sm:modal-middle" popover>
         <div class="modal-box bg-white border border-slate-200">
             <h3 class="font-extrabold text-lg text-slate-900">Ubah Foto Profil</h3>
             <p class="py-2 text-xs text-slate-500">Pilih foto terbaikmu untuk ditampilkan di ID Card & sistem.</p>
@@ -286,46 +287,49 @@
             <div class="flex justify-center my-6">
                 <div
                     class="relative w-36 h-36 rounded-2xl bg-slate-50 border-4 border-slate-200 overflow-hidden shadow-inner flex items-center justify-center">
-                    <img id="avatar-preview"
-                        src="{{ Auth::user()->avatar ? asset(Auth::user()->avatar) : 'https://placehold.co/150x150/e2e8f0/64748b?text=Preview' }}"
+                    <img id="foto-preview"
+                        src="{{ Auth::user()->foto_profil ? Storage::url(Auth::user()->foto_profil) : 'https://placehold.co/150x150/e2e8f0/64748b?text=Preview' }}"
                         alt="Preview" class="w-full h-full object-cover transition-all duration-300">
                 </div>
             </div>
 
-            <!-- Form Input (Nanti JS handle action-nya) -->
-            <form id="form-update-avatar" class="space-y-4">
+            <form id="action-form-foto" action="{{ route('profile-intern.editFoto') }}" method="POST" class="space-y-4"
+                enctype="multipart/form-data">
+                @csrf
+                @method('patch')
                 <div>
-                    <!-- Menggunakan komponen file-input bawaan DaisyUI -->
-                    <input type="file" id="input-file-avatar" name="avatar" accept="image/png, image/jpeg, image/jpg"
-                        class="file-input file-input-bordered file-input-info w-full text-xs text-slate-700 bg-slate-50 focus:outline-none" />
+                    <input type="file" id="input-file-foto" name="foto_profil" accept="image/png, image/jpeg, image/jpg"
+                        class="file-input file-input-bordered w-full text-xs text-slate-700 bg-slate-50 focus:outline-none" />
                     <span class="text-[10px] text-slate-400 block mt-1.5">*Format didukung: JPG, JPEG, PNG (Maks 2MB)</span>
                 </div>
             </form>
-
-            <div class="modal-action">
-                <!-- Tombol Batal akan menutup modal bawaan DaisyUI -->
-                <form method="dialog">
-                    <button
+            <div class="flex items-center justify-end gap-3">
+                <div>
+                    <button popovertarget="my_modal_2" popovertargetaction="hide"
                         class="btn btn-sm sm:btn-md btn-ghost text-slate-600 hover:bg-slate-100 font-bold">Batal</button>
-                </form>
-                <!-- Tombol Simpan (Id untuk nanti dikaitkan dengan AJAX) -->
-                <button type="button" id="btn-save-avatar"
-                    class="btn btn-sm sm:btn-md bg-teal-600 hover:bg-teal-700 text-white border-none shadow-md font-bold">
+                </div>
+                <button type="submit" id="submit-button"
+                    class="btn btn-sm sm:btn-md bg-teal-600 hover:bg-teal-700 text-white border-none shadow-md font-bold"
+                    onclick="document.getElementById('action-form-foto').submit();">
                     Simpan Foto
                 </button>
             </div>
         </div>
 
         <!-- Backdrop klik luar untuk menutup modal -->
-        <form method="dialog" class="modal-backdrop">
-            <button>close</button>
-        </form>
-    </dialog>
+        <div class="modal-backdrop">
+            <button popovertarget="my_modal_2" popovertargetaction="hide">close</button>
+        </div>
+    </div>
     @push('scripts')
         <script>
             const $ = (e) => {
                 return document.querySelector(e);
             }
+
+            const previewFoto = $('#foto-preview');
+            const inputFoto = $('#input-file-foto');
+            const submitButton = $('#submit-button');
 
             const dismissToast = () => {
                 const notifToast = document.querySelectorAll('.toast-notif');
@@ -346,6 +350,24 @@
                         dismissToast();
                     }, 5000);
                 }
+                submitButton.addEventListener('click', () => {
+                    submitButton.disabled = true;
+                    submitButton.innerText = '...Menyimpan';
+                    submitButton.classList.remove('bg-teal-600', 'hover:bg-teal-700', 'text-white');
+                    submitButton.classList.add('bg-slate-400', 'cursor-not-allowed', 'text-slate-700');
+                });
+                inputFoto.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            previewFoto.src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        previewFoto.src = "{{ Auth::user()->foto_profil ?? 'https://placehold.co/150x150/e2e8f0/64748b?text=Preview' }}";
+                    }
+                });
             })
 
         </script>
