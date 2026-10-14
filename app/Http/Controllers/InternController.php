@@ -17,7 +17,6 @@ class InternController extends Controller
      */
     public function index(Request $request)
     {
-        $periode = '-';
         $hariTersisa = 0;
 
         $internId = auth()->user()->internship->id;
@@ -37,23 +36,12 @@ class InternController extends Controller
         if($request->ajax()){
             return view('intern-dashboard.partials.list-logbook-dashboard', compact('dataLogbook'))->render();
         }
-
         if ($dataPeriode) {
             Carbon::setLocale('id');
 
-            $mulai = Carbon::parse($dataPeriode->start_date);
             $selesai = Carbon::parse($dataPeriode->end_date);
             $hariIni = Carbon::now();
 
-            if ($mulai->year === $selesai->year) {
-                if ($mulai->month === $selesai->month) {
-                    $periode = $mulai->isoFormat('D') . ' - ' . $selesai->isoFormat('D MMMM YYYY');
-                } else {
-                    $periode = $mulai->isoFormat('D MMMM') . ' - ' . $selesai->isoFormat('D MMMM YYYY');
-                }
-            } else {
-                $periode = $mulai->isoFormat('D MMMM YYYY') . ' - ' . $selesai->isoFormat('D MMMM YYYY');
-            }
             if ($hariIni->gt($selesai)) {
                 $hariTersisa = 0;
             } else {
@@ -61,9 +49,10 @@ class InternController extends Controller
                 $hariTersisa = $hariTersisa < 0 ? 0 : $hariTersisa;
             }
         }
-        $suratSelesai = $dataPeriode->surat_selesai ?? null;
 
-        return view('intern-dashboard.index', compact('jumlahKehadiran', 'jumlahLogbook', 'periode', 'hariTersisa', 'dataLogbook', 'dataMentor', 'suratSelesai'));
+        $suratSelesai = $dataPeriode->surat_selesai ?? null;
+        $periode = Carbon::parse($dataPeriode->start_date)->translatedFormat('d M Y') . ' - ' . Carbon::parse($dataPeriode->end_date)->translatedFormat('d M Y');
+        return view('intern-dashboard.index', compact('jumlahKehadiran', 'jumlahLogbook', 'hariTersisa', 'dataLogbook', 'dataMentor', 'suratSelesai', 'periode'));
     }
     public function downloadSuratSelesai()
     {
