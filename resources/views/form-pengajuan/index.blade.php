@@ -267,9 +267,6 @@
         </form>
     </div>
     <script>
-        /**
-         * Memproses file yang dipilih dan menampilkan card preview
-         */
         function handleFileSelect(input, previewId, dropzoneId) {
             if (input.files && input.files[0]) {
                 const file = input.files[0];
@@ -296,14 +293,11 @@
             }
         }
 
-        /**
-         * Menghapus file yang sudah dipilih & mengembalikan kotak upload dropzone
-         */
+
         function removeFile(inputId, previewId, dropzoneId) {
             const input = document.getElementById(inputId);
-            input.value = ''; // Reset nilai input file
+            input.value = ''; 
 
-            // Sembunyikan card preview & tampilkan kembali dropzone
             document.getElementById(previewId).classList.add('hidden');
             document.getElementById(previewId).classList.remove('flex');
             document.getElementById(dropzoneId).classList.remove('hidden');
