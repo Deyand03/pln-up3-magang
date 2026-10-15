@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
     {
         $regis_token = Applications::where('registration_token', $request->token)->first();
 
-        if (!$regis_token) {
+        if (! $regis_token) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Token pendaftaran tidak valid.');
@@ -56,7 +56,7 @@ class RegisteredUserController extends Controller
             'token' => ['required', 'string'],
             'nama' => ['required', 'string', 'max:255'],
             'nim_nisn' => ['required', 'string', 'max:50', Rule::unique('internships', 'nim_nisn')],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'no_hp' => ['required', 'string', 'max:20'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
@@ -79,7 +79,6 @@ class RegisteredUserController extends Controller
 
         $user->internship()->create([
             'application_id' => $regis_token->id,
-            'department' => $regis_token->department,
             'nim_nisn' => $request->nim_nisn,
         ]);
 

@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendances;
-use App\Models\Internships;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AttendancesController extends Controller
 {
     private $officeLat = -1.607712;
+
     private $officeLng = 103.591788;
+
     private $maxRadiusMeters = 100;
 
     public function index(Request $request)
@@ -42,14 +44,14 @@ class AttendancesController extends Controller
         $statPresensi = [
             'totalHadir' => $totalHadir,
             'totalIzinSakit' => $totalIzinSakit,
-            'tingkatKehadiran' => $tingkatKehadiran . '%',
+            'tingkatKehadiran' => $tingkatKehadiran.'%',
         ];
 
         $presensi = Attendances::where('internship_id', $internId)
             ->orderBy('date', 'desc')
             ->paginate(10);
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             return view('intern-dashboard.partials.list-presensi', compact('presensi'))->render();
         }
 
@@ -95,10 +97,6 @@ class AttendancesController extends Controller
         $isValidRadius = $distance <= $this->maxRadiusMeters;
 
         if ($request->type === 'masuk') {
-            $existing = Attendances::where('internship_id', $internId)
-                ->whereDate('date', $today)
-                ->first();
-
             if ($existing && $existing->check_in) {
                 return redirect()->back()->with('error', 'Anda sudah melakukan absen masuk hari ini.');
             }
@@ -127,7 +125,7 @@ class AttendancesController extends Controller
                 ->whereDate('date', $today)
                 ->first();
 
-            if (!$attendance || !$attendance->check_in) {
+            if (! $attendance || ! $attendance->check_in) {
                 return redirect()->back()->with('error', 'Anda belum melakukan absen masuk hari ini.');
             }
 
@@ -155,46 +153,48 @@ class AttendancesController extends Controller
             'alasan' => 'required|string',
             'surat_izin' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
+        try {
+            $internId = auth()->user()->internship->id;
 
-        $user = auth()->user();
-        $internship = Internships::where('user_id', $user->id)->first() ?? $user->internship;
-        $internId = $internship ? $internship->id : 1;
+            $today = Carbon::today('Asia/Jakarta');
+            $existing = Attendances::where('internship_id', $internId)
+                ->whereDate('date', $today)
+                ->first();
 
-        $today = Carbon::today('Asia/Jakarta');
-        $existing = Attendances::where('internship_id', $internId)
-            ->whereDate('date', $today)
-            ->first();
+            if ($existing) {
+                if ($existing->check_in || $existing->status === 'hadir') {
+                    return redirect()->back()->with('error', 'Pengajuan ditolak! Anda sudah melakukan Absen Masuk hari ini.');
+                }
 
-
-        if ($existing) {
-            if ($existing->check_in || $existing->status === 'hadir') {
-                return redirect()->back()->with('error', 'Pengajuan ditolak! Anda sudah melakukan Absen Masuk hari ini.');
+                if (in_array($existing->status, ['izin', 'sakit'])) {
+                    return redirect()->back()->with('error', 'Anda sudah mengajukan izin/sakit untuk hari ini.');
+                }
             }
 
-            if (in_array($existing->status, ['izin', 'sakit'])) {
-                return redirect()->back()->with('error', 'Anda sudah mengajukan izin/sakit untuk hari ini.');
+            $suratPath = null;
+            if ($request->hasFile('surat_izin')) {
+                $suratPath = $request->file('surat_izin')->store('surat_izin', 's3');
             }
+
+            $status = $request->kategori_izin === 'sakit' ? 'sakit' : 'izin';
+
+            Attendances::create(
+                [
+                    'internship_id' => $internId,
+                    'date' => $today->toDateString(),
+                    'status' => $status,
+                    'notes' => $request->alasan,
+                    'surat_izin' => $suratPath,
+                    'is_valid' => true,
+                ]
+            );
+
+            return redirect()->back()->with('success', 'Pengajuan izin/sakit berhasil dikirim.');
+        } catch (\Throwable $th) {
+            Log::info('Terjadi Kesalahan StoreIzin: '.$th);
+
+            return redirect()->back()->with('error', 'Terjadi Kesalahan, Pengajuan izin/sakit Gagal.');
         }
-
-        $suratPath = null;
-        if ($request->hasFile('surat_izin')) {
-            $suratPath = $request->file('surat_izin')->store('surat_izin', 's3');
-        }
-
-        $status = $request->kategori_izin === 'sakit' ? 'sakit' : 'izin';
-
-        Attendances::Create(
-            [
-                'internship_id' => $internId,
-                'date' => $today->toDateString(),
-                'status' => $status,
-                'notes' => $request->alasan,
-                'surat_izin' => $suratPath,
-                'is_valid' => true,
-            ]
-        );
-
-        return redirect()->back()->with('success', 'Pengajuan izin/sakit berhasil dikirim.');
     }
 
     private function calculateDistance($lat1, $lon1, $lat2, $lon2)

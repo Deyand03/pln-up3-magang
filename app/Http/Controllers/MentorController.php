@@ -17,7 +17,7 @@ class MentorController extends Controller
             ->withCount([
                 'logbooks as pending_logbooks_count' => function ($query) {
                     $query->where('status', 'pending');
-                }
+                },
             ])
             ->where('mentor_id', $mentorId)
             ->get();
@@ -47,7 +47,7 @@ class MentorController extends Controller
                 'attendances',
                 'logbooks as pending_logbooks_count' => function ($query) {
                     $query->where('status', 'pending');
-                }
+                },
             ])
             ->where('mentor_id', $mentorId)
             ->findOrFail($id);
@@ -77,7 +77,11 @@ class MentorController extends Controller
 
     public function toggleLogbookStatus(Request $request, $id)
     {
-        $logbook = Logbooks::findOrFail($id);
+        $mentorId = Auth::user()->id;
+
+        $logbook = Logbooks::whereHas('internship', function ($query) use ($mentorId) {
+            $query->where('mentor_id', $mentorId);
+        })->findOrFail($id);
 
         $logbook->update([
             'status' => $logbook->status === 'pending' ? 'approved' : 'pending',
@@ -88,6 +92,6 @@ class MentorController extends Controller
 
     public function profile()
     {
-        return view();
+        return redirect()->route('dashboard-mentor');
     }
 }

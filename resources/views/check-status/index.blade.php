@@ -332,6 +332,8 @@
                                     <div class="flex items-center gap-2 pb-2 mb-3 border-b border-slate-100">
                                         <span class="text-xs font-bold text-slate-800">Unggah Berkas Dokumen</span>
                                     </div>
+                                    <input type="hidden" value="{{ $application->registration_number }}"
+                                        name="registration_number">
                                     <div class="flex gap-5">
                                         <!-- Upload Box 1: Surat Rekomendasi -->
                                         <div class="mb-2 w-1/2">

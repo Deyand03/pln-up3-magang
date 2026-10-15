@@ -66,6 +66,7 @@ class HrdController extends Controller
             ->get();
 
         $mentors = User::where('role', 'mentor')->get();
+
         return view('hrd.index', compact(
             'pendingVerifikasi',
             'pesertaAktif',
@@ -97,13 +98,15 @@ class HrdController extends Controller
     public function showPendaftar(string $id)
     {
         $application = Applications::findOrFail($id);
+
         return view('hrd.detail-pendaftar', compact('application'));
     }
+
     public function updateStatusPendaftaran(Request $request, $id)
     {
         $request->validate([
             'status' => 'required|in:approved,rejected,revision',
-            'notes' => 'nullable|string'
+            'notes' => 'nullable|string',
         ]);
 
         $application = Applications::findOrFail($id);
@@ -112,7 +115,7 @@ class HrdController extends Controller
 
         if ($request->status === 'approved') {
             do {
-                $registrationToken = date('Ymd') . strtoupper(Str::random(8)) . '-' . $application->id;
+                $registrationToken = date('Ymd').strtoupper(Str::random(8)).'-'.$application->id;
             } while (Applications::where('registration_token', $registrationToken)->exists());
 
             $application->registration_token = $registrationToken;
@@ -131,7 +134,7 @@ class HrdController extends Controller
     public function uploadSuratSelesai(Request $request, $id)
     {
         $request->validate([
-            'surat_selesai' => 'required|file|mimes:pdf|max:2048'
+            'surat_selesai' => 'required|file|mimes:pdf|max:2048',
         ]);
 
         $peserta = Applications::findOrFail($id);
@@ -149,7 +152,8 @@ class HrdController extends Controller
             return redirect()->back()->with('success', 'Berhasil Upload Surat Selesai');
 
         } catch (\Throwable $th) {
-            Log::info('Terjadi Kesalahan: ' . $th);
+            Log::error('Terjadi Kesalahan: '.$th);
+
             return redirect()->back()->with('error', 'Gagal upload surat, Terjadi Kesalahan');
         }
     }
@@ -165,9 +169,10 @@ class HrdController extends Controller
             $application->surat_selesai = null;
             $application->save();
 
-            return redirect()->back()->with('success', 'Berhasil Menghapus Surat Selesai: ' . $application->name);
+            return redirect()->back()->with('success', 'Berhasil Menghapus Surat Selesai: '.$application->name);
         } catch (\Throwable $th) {
-            Log::info('Terjadi Kesalahan: ' . $th);
+            Log::error('Terjadi Kesalahan: '.$th);
+
             return redirect()->back()->with('error', 'Terjadi Kesalahan');
         }
     }
@@ -180,14 +185,14 @@ class HrdController extends Controller
         ]);
 
         foreach ($request->internships as $internId => $data) {
-            if (!empty($data['mentor_id'])) {
+            if (! empty($data['mentor_id'])) {
                 $mentor = User::find($data['mentor_id']);
 
                 Internships::where('id', $internId)
                     ->where('application_id', $id)
                     ->update([
                         'mentor_id' => $mentor->id,
-                        'department' => $mentor->name
+                        'department' => $mentor->name,
                     ]);
             }
         }
@@ -199,27 +204,29 @@ class HrdController extends Controller
     {
         $request->validate([
             'internship' => 'required|array',
-            'internship.*.status' => 'required|in:pending,active,completed,terminated',
+            'internship.*.status' => 'required|in:active,completed,terminated',
         ]);
         try {
             foreach ($request->internship as $internId => $data) {
                 Internships::where('id', $internId)
                     ->where('application_id', $id)
                     ->update([
-                        'status' => $data['status']
+                        'status' => $data['status'],
                     ]);
             }
 
             return redirect()->back()->with('success', 'Status individu peserta berhasil diperbarui!');
         } catch (\Throwable $th) {
-            Log::info("Terjadi Kesalahan: " . $th);
+            Log::error('Terjadi Kesalahan: '.$th);
+
             return redirect()->back()->with('error', 'Gagal Memperbarui Status, Terjadi Kesalahan!');
         }
     }
 
-    public function unduhRekapAbsen($timId) {
+    public function unduhRekapAbsen($timId)
+    {
         $tim = Applications::findOrFail($timId);
-        $namaFile = 'rekap-absen-' . Str::slug($tim->institusi) . '-' . date('Ymd') . '.xlsx';
+        $namaFile = 'rekap-absen-'.Str::slug($tim->institusi).'-'.date('Ymd').'.xlsx';
 
         return Excel::download(new AttendanceTimExport($timId), $namaFile);
     }

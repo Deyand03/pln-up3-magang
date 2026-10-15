@@ -18,14 +18,14 @@ class LogbookController extends Controller
             ->orderBy('date', 'desc')
             ->paginate(10);
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             return view('intern-dashboard.partials.list-logbook', compact('dataLogbook'))->render();
         }
 
         $totalLogbook = Logbooks::where('internship_id', $internId)->count();
         $totalLogbookPending = Logbooks::where('internship_id', $internId)
-        ->where('status', 'pending')
-        ->count();
+            ->where('status', 'pending')
+            ->count();
 
         return view('intern-dashboard.logbook', compact('dataLogbook', 'totalLogbook', 'totalLogbookPending'));
     }
@@ -65,7 +65,9 @@ class LogbookController extends Controller
             return redirect()->back()->with('success', 'Berhasil Menambahkan Logbook');
 
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Terjadi Kesalahan! ' . $th);
+            report($th);
+
+            return redirect()->back()->with('error', 'Gagal menambahkan logbook. Silakan coba lagi.');
         }
     }
 
@@ -91,14 +93,17 @@ class LogbookController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'date'               => 'required|date',
+            'date'               => 'required|date|before_or_equal:today',
             'jam_mulai'          => 'required',
-            'jam_selesai'        => 'required',
+            'jam_selesai'        => 'required|after:jam_mulai',
             'nama_kegiatan'      => 'required|string',
             'deskripsi_kegiatan' => 'required|string'
         ]);
 
-        $logbook = Logbooks::where('id', $id)->first();
+        $internId = auth()->user()->internship->id;
+        $logbook = Logbooks::where('id', $id)
+            ->where('internship_id', $internId)
+            ->firstOrFail();
 
         try {
             $logbook->update([
