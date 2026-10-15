@@ -36,7 +36,7 @@
                             <p
                                 style="color: #475569; font-size: 14px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
                                 Pengajuan pendaftaran magang Anda dari instansi
-                                <strong>{{ $application->institution }}</strong> telah berhasil masuk dan tercatat di
+                                <strong>{{ $application->institusi }}</strong> telah berhasil masuk dan tercatat di
                                 sistem kami.
                             </p>
 
