@@ -89,7 +89,7 @@
                             <div>
                                 <span class="text-[10px] text-slate-400 block mb-0.5">Jurusan / Program Studi</span>
                                 <span
-                                    class="text-sm font-bold text-teal-300 leading-tight block">{{ $application->program_studi ?? 'N/A' }}</span>
+                                    class="text-sm font-bold text-teal-300 leading-tight block">{{ $application->jurusan ?? 'N/A' }}</span>
                             </div>
                             <div class="pt-4 border-t border-slate-700/80">
                                 <span class="text-[10px] text-slate-400 block mb-1">Periode Pelaksanaan</span>
