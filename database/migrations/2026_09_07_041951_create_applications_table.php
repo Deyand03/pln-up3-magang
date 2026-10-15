@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('phone');
             $table->string('nim_nisn');
             $table->string('institusi');
-            $table->string('program_studi');
+            $table->string('jurusan');
             $table->integer('total_interns');
             $table->date('start_date');
             $table->date('end_date');
