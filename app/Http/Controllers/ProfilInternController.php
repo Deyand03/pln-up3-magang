@@ -32,10 +32,10 @@ class ProfilInternController extends Controller
         ]);
 
         try {
-            $user->update([
-                'email' => $request->email,
-                'phone' => $request->phone,
-            ]);
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+
+            $user->save();
 
             return redirect()->back()->with('success', 'Berhasil Memperbarui Data');
 
