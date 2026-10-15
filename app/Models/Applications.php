@@ -17,7 +17,7 @@ class Applications extends Model
         'phone',
         'nim_nisn',
         'institusi',
-        'program_studi',
+        'jurusan',
         'total_interns',
         'start_date',
         'end_date',
