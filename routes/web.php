@@ -9,6 +9,8 @@ use App\Http\Controllers\InternController;
 use App\Http\Controllers\LogbookController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\ProfilInternController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
@@ -61,6 +63,25 @@ Route::middleware(['auth', 'role:hrd'])->group(function () {
     Route::patch('/dashboard-hrd/pendaftar/{id}', [HrdController::class, 'updateStatusPendaftaran'])->name('dashboard-hrd.pendaftar.detail.update');
 
     Route::get('/dashboard-hrd/tim/{id}/rekap-absen', [HrdController::class, 'unduhRekapAbsen'])->name('dashboard-hrd.unduh-rekap-absen');
+});
+
+Route::prefix('cron')->group(function () {
+    $guard = function (Request $request) {
+        $secret = (string) config('services.cron_secret');
+        abort_unless($secret !== '' && hash_equals($secret, (string) $request->bearerToken()), 401);
+    };
+
+    Route::get('mark-alfa', function (Request $request) use ($guard) {
+        $guard($request);
+        Artisan::call('attendance:mark-alfa');
+        return response(trim(Artisan::output()));
+    });
+
+    Route::get('update-status', function (Request $request) use ($guard) {
+        $guard($request);
+        Artisan::call('magang:update-status');
+        return response(trim(Artisan::output()));
+    });
 });
 
 require __DIR__ . '/auth.php';

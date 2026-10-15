@@ -19,6 +19,10 @@ class MarkAlfaAttendance extends Command
     public function handle()
     {
         $today = Carbon::today('Asia/Jakarta');
+        if ($today->isWeekend()) {
+            $this->info('Akhir pekan, dilewati.');
+            return;
+        }
 
         $activeInterns = Internships::where('status', 'active')->get();
 
