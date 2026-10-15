@@ -46,9 +46,9 @@ class LogbookController extends Controller
         $internId = auth()->user()->internship->id;
 
         $request->validate([
-            'date'               => 'required|date',
+            'date'               => 'required|date|before_or_equal:today',
             'jam_mulai'          => 'required',
-            'jam_selesai'        => 'required',
+            'jam_selesai'        => 'required|after:jam_mulai',
             'nama_kegiatan'      => 'required|string',
             'deskripsi_kegiatan' => 'required|string'
         ]);
