@@ -434,7 +434,8 @@
                                     </button>
                                 </div>
 
-                                <form action="{{ route('dashboard-hrd.update-divisi', $tim->id) }}" method="POST" class="overflow-y-auto p-6 space-y-4">
+                                <form action="{{ route('dashboard-hrd.update-divisi', $tim->id) }}" method="POST"
+                                    class="overflow-y-auto p-6 space-y-4">
                                     @csrf
                                     @method('PATCH')
 
@@ -510,7 +511,8 @@
                                     </button>
                                 </div>
 
-                                <form action="{{ route('dashboard-hrd.update-status-peserta', $tim->id) }}" method="POST" class="overflow-y-auto p-6 space-y-4">
+                                <form action="{{ route('dashboard-hrd.update-status-peserta', $tim->id) }}" method="POST"
+                                    class="overflow-y-auto p-6 space-y-4">
                                     @csrf
                                     @method('PATCH')
 
@@ -535,11 +537,11 @@
                                                 <select name="internship[{{ $intern->id }}][status]"
                                                     class="w-full py-2.5 px-3 border border-slate-200 rounded-xl text-xs font-bold focus:ring-2 focus:border-amber-500"
                                                     :class="{
-                                                                                                                                            'bg-teal-50 text-teal-700': '{{ $intern->status }}' === 'active',
-                                                                                                                                            'bg-slate-100 text-slate-700': '{{ $intern->status }}' === 'completed',
-                                                                                                                                            'bg-rose-50 text-rose-700': '{{ $intern->status }}' === 'terminated',
-                                                                                                                                            'bg-amber-50 text-amber-700': '{{ $intern->status }}' === 'pending'
-                                                                                                                                        }">
+                                                                                                                                                        'bg-teal-50 text-teal-700': '{{ $intern->status }}' === 'active',
+                                                                                                                                                        'bg-slate-100 text-slate-700': '{{ $intern->status }}' === 'completed',
+                                                                                                                                                        'bg-rose-50 text-rose-700': '{{ $intern->status }}' === 'terminated',
+                                                                                                                                                        'bg-amber-50 text-amber-700': '{{ $intern->status }}' === 'pending'
+                                                                                                                                                    }">
                                                     <option value="pending" {{ $intern->status === 'pending' ? 'selected' : '' }}>
                                                         Pending</option>
                                                     <option value="active" {{ $intern->status === 'active' ? 'selected' : '' }}>Active
