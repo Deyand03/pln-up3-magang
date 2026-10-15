@@ -7,14 +7,14 @@ use App\Models\Internships;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
-class AttendanceTimExport implements FromArray, WithHeadings, WithStyles, ShouldAutoSize
+class AttendanceTimExport implements FromArray, WithHeadings, WithStyles, WithColumnWidths
 {
     protected $timId;
 
@@ -72,9 +72,9 @@ class AttendanceTimExport implements FromArray, WithHeadings, WithStyles, Should
                 }
 
                 $data[] = [
-                    'Tanggal'    => $displayDate,
-                    'Nama'       => $intern->user->name,
-                    'Kehadiran'  => $status,
+                    'Tanggal' => $displayDate,
+                    'Nama' => $intern->user->name,
+                    'Kehadiran' => $status,
                     'Jam Datang' => $checkIn,
                     'Jam Pulang' => $checkOut,
                     'Keterangan' => $keterangan,
@@ -94,6 +94,18 @@ class AttendanceTimExport implements FromArray, WithHeadings, WithStyles, Should
             'Jam Datang',
             'Jam Pulang',
             'Keterangan'
+        ];
+    }
+
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 16,
+            'B' => 30,
+            'C' => 14,
+            'D' => 14,
+            'E' => 14,
+            'F' => 35,  
         ];
     }
 

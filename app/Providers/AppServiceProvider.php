@@ -24,8 +24,5 @@ class AppServiceProvider extends ServiceProvider
         if (env('APP_ENV') === ('production')) {
             URL::forceScheme('https');
         }
-        DB::listen(function ($q) {
-            logger()->info(round($q->time) . 'ms | ' . $q->sql);
-        });
     }
 }
