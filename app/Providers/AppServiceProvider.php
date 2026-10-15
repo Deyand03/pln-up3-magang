@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,8 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if(env('APP_ENV') === ('production')) {
+        if (env('APP_ENV') === ('production')) {
             URL::forceScheme('https');
         }
+        DB::listen(function ($q) {
+            logger()->info(round($q->time) . 'ms | ' . $q->sql);
+        });
     }
 }

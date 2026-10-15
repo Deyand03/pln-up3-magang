@@ -15,6 +15,7 @@ Route::get('/', [HomeController::class, 'index'])->name('homepage');
 Route::get('/check-status', [CheckstatusController::class, 'create'])->name('check-status');
 Route::get('/check-status/cek', [CheckstatusController::class, 'checkStatus'])->name('check-status.check');
 Route::patch('/check-status/cek/update/{id}', [CheckstatusController::class, 'updateDokumen'])->name('check-status.update-dokumen');
+Route::get('/phpv', fn () => PHP_VERSION);
 
 Route::middleware('guest')->group(function () {
     Route::get('/form-pengajuan', [FormpengajuanController::class, 'create'])->name('form-pengajuan');
