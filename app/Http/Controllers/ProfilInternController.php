@@ -27,15 +27,15 @@ class ProfilInternController extends Controller
     {
         $user = Auth::user();
         $request->validate([
-            'email' => 'email|unique:users,email',
-            'phone' => 'string|unique:users,phone'
+            'email' => 'email',
+            'phone' => 'string'
         ]);
 
         try {
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-
-            $user->save();
+            $user->update([
+                'email' => $request->email,
+                'phone' => $request->phone,
+            ]);
 
             return redirect()->back()->with('success', 'Berhasil Memperbarui Data');
 
