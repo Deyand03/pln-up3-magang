@@ -3,32 +3,64 @@
 
 @section('content')
     {{-- Notifikasi Toaster --}}
-    @if (session('success'))
-        <div id="toast-success"
-            class="fixed top-5 right-5 z-50 max-w-sm w-full bg-white text-white p-4 rounded-2xl shadow-2xl border border-teal-500/30 flex items-start gap-3 transform transition-all duration-300 animate-slide-in">
-            <div
-                class="w-8 h-8 rounded-xl bg-teal-500/20 border border-teal-500/40 text-teal-400 flex items-center justify-center shrink-0 mt-0.5">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-                </svg>
-            </div>
-            <div class="flex-1 pr-2">
-                <h4 class="text-xs font-bold text-teal-400">Pengajuan Berhasil!</h4>
-                <p class="text-[11px] text-slate-700 mt-0.5 leading-snug">
-                    {{ session('success') }}
-                </p>
-            </div>
-            <button onclick="dismissToast()" class="text-slate-400 hover:text-black p-1 rounded-lg transition-colors">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
+    @if(session('success') || session('error'))
+        <div class="fixed top-6 right-6 z-50 flex flex-col gap-3" x-data="{ show: true }"
+            x-init="setTimeout(() => show = false, 4000)" x-show="show"
+            x-transition:enter="transform ease-out duration-300 transition"
+            x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-10"
+            x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
+            x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0 sm:translate-x-10" style="display: none;">
+
+            @if(session('success'))
+                <div
+                    class="bg-white border-l-4 border-emerald-500 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-4 max-w-sm w-full flex items-start gap-3">
+                    <div class="shrink-0 text-emerald-500 bg-emerald-50 p-1.5 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <div class="flex-1 mt-0.5">
+                        <h3 class="text-sm font-extrabold text-slate-800">Berhasil!</h3>
+                        <p class="text-xs text-slate-500 font-medium mt-0.5">{{ session('success') }}</p>
+                    </div>
+                    <button @click="show = false"
+                        class="text-slate-400 hover:text-slate-600 transition-colors bg-slate-50 hover:bg-slate-100 p-1 rounded-md">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            @endif
+            @if(session('error'))
+                <!-- Toast Error (Merah) -->
+                <div
+                    class="bg-white border-l-4 border-rose-500 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-4 max-w-sm w-full flex items-start gap-3">
+                    <div class="shrink-0 text-rose-500 bg-rose-50 p-1.5 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div class="flex-1 mt-0.5">
+                        <h3 class="text-sm font-extrabold text-slate-800">Terjadi Kesalahan</h3>
+                        <p class="text-xs text-slate-500 font-medium mt-0.5">{{ session('error') }}</p>
+                    </div>
+                    <button @click="show = false"
+                        class="text-slate-400 hover:text-slate-600 transition-colors bg-slate-50 hover:bg-slate-100 p-1 rounded-md">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            @endif
         </div>
     @endif
 
+
     <div class="min-h-[85vh] flex justify-center items-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50/50">
         <div
-            class="w-full md:max-w-xl max-w-md bg-white rounded-2xl p-6 sm:p-8 shadow-xl shadow-slate-200/60 border border-slate-200/80 text-center relative overflow-hidden transition-all">
+            class="w-full md:max-w-3xl max-w-md bg-white rounded-2xl p-6 sm:p-8 shadow-xl shadow-slate-200/60 border border-slate-200/80 text-center relative overflow-hidden transition-all">
 
             <div class="absolute -top-12 -left-12 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl pointer-events-none"></div>
             <div class="absolute -top-12 -right-12 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none">
@@ -277,8 +309,7 @@
                             </div>
                             <div class="bg-rose-50/50 p-3 rounded-xl border border-rose-200/80 w-full">
                                 <p class="text-xs font-bold text-rose-900">Pengajuan Ditolak</p>
-                                <p class="text-[11px] text-rose-700 mt-0.5">Mohon maaf, kuota penerimaan magang periode ini
-                                    sedang penuh.</p>
+                                <p class="text-[11px] text-rose-700 mt-0.5">{{ $application->notes }}</p>
                             </div>
                         @endif
                     </div>
@@ -289,12 +320,154 @@
                             class="bg-teal-600 py-3 text-xs tracking- text-white font-bold rounded-xl w-full shadow hover:shadow-lg shadow-teal-500/30 hover:bg-teal-700 active:scale-95 duration-300 transition-all transform-gpu">
                             Buat Akun
                         </a>
-
                     </div>
+                @elseif($application->status === 'revision')
+                    <form action="{{ route('check-status.update-dokumen', $application->id) }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('patch')
+                        <div class="flex flex-col gap-3 mt-3">
+                            <div class="flex">
+                                <div class="bg-white w-full rounded-2xl p-4 shadow-soft border border-slate-200/80 mb-5">
+                                    <div class="flex items-center gap-2 pb-2 mb-3 border-b border-slate-100">
+                                        <span class="text-xs font-bold text-slate-800">Unggah Berkas Dokumen</span>
+                                    </div>
+                                    <div class="flex gap-5">
+                                        <!-- Upload Box 1: Surat Rekomendasi -->
+                                        <div class="mb-2 w-1/2">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <label class="text-[11px] font-semibold text-slate-700">Surat Rekomendasi <span
+                                                        class="text-rose-500 font-bold">(wajib)</span></label>
+                                            </div>
+
+                                            <!-- Area Dropzone Default -->
+                                            <label for="recommendation_letter" id="dropzone_rec"
+                                                class="border-2 border-dashed border-teal-200/90 hover:border-teal-500 bg-teal-50/30 hover:bg-teal-50/60 rounded-xl p-4 text-center cursor-pointer transition-all {{ !empty($application->recommendation_letter) ? 'hidden' : 'block' }}">
+                                                <input type="file" name="recommendation_letter" id="recommendation_letter"
+                                                    accept=".pdf" class="hidden" {{ empty($application->recommendation_letter) ? 'required' : '' }}
+                                                    onchange="handleFileSelect(this, 'preview_rec', 'dropzone_rec')" />
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-teal-100/80 text-teal-700 flex items-center justify-center mx-auto mb-1.5">
+                                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                                    </svg>
+                                                </div>
+                                                <p class="text-xs font-semibold text-slate-700">Klik untuk pilih file atau <span
+                                                        class="text-teal-700 underline">browse</span></p>
+                                                <p class="text-[10px] text-slate-400 mt-0.5">Maksimal file 2 MB | Format PDF</p>
+                                            </label>
+
+                                            <!-- Card Preview File (Muncul Saat File Dipilih) -->
+                                            <div id="preview_rec"
+                                                class="{{ !empty($application->recommendation_letter) ? 'flex' : 'hidden' }} items-center justify-between pr-3 bg-teal-50/40 border border-teal-200 hover:border-teal-500 rounded-xl transition-all">
+                                                <a href="{{ Storage::url($application->recommendation_letter) }}" target="_blank"
+                                                    class="cursor-pointer p-3 flex items-center gap-3 overflow-hidden">
+                                                    <div
+                                                        class="w-9 h-9 rounded-lg bg-rose-50 border border-rose-100 text-rose-600 flex flex-col items-center justify-center shrink-0 shadow-xs">
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path
+                                                                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM14 9V3.5L18.5 8H14z" />
+                                                        </svg>
+                                                        <span class="text-[7px] font-bold -mt-0.5">PDF</span>
+                                                    </div>
+                                                    <div class="min-w-0">
+                                                        <p id="filename_rec" class="text-xs font-bold text-slate-800 truncate">
+                                                            {{ !empty($application->recommendation_letter) ? 'Surat_Rekomendasi_Lama.pdf' : 'nama_file.pdf' }}
+                                                        </p>
+                                                        <p id="filesize_rec"
+                                                            class="text-[10px] text-slate-400 font-semibold mt-0.5">
+                                                            {{ !empty($application->recommendation_letter) ? 'Dokumen tersimpan' : '0 MB • Berhasil dipilih' }}
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                                <button type="button"
+                                                    onclick="removeFile('recommendation_letter', 'preview_rec', 'dropzone_rec')"
+                                                    class="text-slate-400 hover:text-rose-500 p-1.5 rounded-lg hover:bg-rose-50 transition-colors shrink-0"
+                                                    title="Hapus berkas">
+                                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Upload Box 2: Proposal Magang/CV -->
+                                        <div class="mb-2 w-1/2">
+                                            <div class="flex items-center justify-between mb-1">
+                                                <label class="text-[11px] font-semibold text-slate-700">Proposal Magang / CV <span
+                                                        class="text-slate-400 font-normal">(opsional)</span></label>
+                                            </div>
+
+                                            <!-- Area Dropzone Default -->
+                                            <label for="proposal" id="dropzone_prop"
+                                                class="border-2 border-dashed border-teal-200/90 hover:border-teal-500 bg-teal-50/30 hover:bg-teal-50/60 rounded-xl p-4 text-center cursor-pointer transition-all {{ !empty($application->proposal) ? 'hidden' : 'block' }}">
+                                                <input type="file" name="proposal" id="proposal" accept=".pdf" class="hidden"
+                                                    onchange="handleFileSelect(this, 'preview_prop', 'dropzone_prop')" />
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-teal-100/80 text-teal-700 flex items-center justify-center mx-auto mb-1.5">
+                                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                                    </svg>
+                                                </div>
+                                                <p class="text-xs font-semibold text-slate-700">Klik untuk pilih file atau <span
+                                                        class="text-teal-700 underline">browse</span></p>
+                                                <p class="text-[10px] text-slate-400 mt-0.5">Maksimal file 2 MB | Format PDF</p>
+                                            </label>
+
+                                            <!-- Card Preview File (Muncul Saat File Dipilih) -->
+                                            <div id="preview_prop"
+                                                class="{{ !empty($application->proposal) ? 'flex' : 'hidden' }} items-center justify-between bg-teal-50/40 border border-teal-200 rounded-xl p-3 transition-all">
+                                                <a href="{{ $application->proposal ? Storage::url($application->proposal) : '#' }}"
+                                                    class="flex items-center gap-3 overflow-hidden">
+                                                    <div
+                                                        class="w-9 h-9 rounded-lg bg-rose-50 border border-rose-100 text-rose-600 flex flex-col items-center justify-center shrink-0 shadow-xs">
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path
+                                                                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM14 9V3.5L18.5 8H14z" />
+                                                        </svg>
+                                                        <span class="text-[7px] font-bold -mt-0.5">PDF</span>
+                                                    </div>
+                                                    <div class="min-w-0">
+                                                        <p id="filename_prop" class="text-xs font-bold text-slate-800 truncate">
+                                                            {{ !empty($application->proposal) ? 'Surat_Rekomendasi_Lama.pdf' : 'nama_file.pdf' }}
+                                                        </p>
+                                                        <p id="filesize_prop"
+                                                            class="text-[10px] text-slate-400 font-semibold mt-0.5">
+                                                            {{ !empty($application->proposal) ? 'Dokumen tersimpan' : '0 MB • Berhasil dipilih' }}
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                                <button type="button"
+                                                    onclick="removeFile('proposal', 'preview_prop', 'dropzone_prop')"
+                                                    class="text-slate-400 hover:text-rose-500 p-1.5 rounded-lg hover:bg-rose-50 transition-colors shrink-0"
+                                                    title="Hapus berkas">
+                                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Button -->
+                            <div>
+                                <button type="submit"
+                                    class="w-full bg-teal-600 hover:bg-teal-600 active:scale-95 text-white font-bold text-xs py-3.5 px-4 rounded-xl shadow-lg shadow-teal-700/20 transition-all flex items-center justify-center gap-2">
+                                    <span>Submit Perubahan</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 @endif
             @else
-            {{-- Default State --}}
-            <div class="mt-8 pt-4 border-t border-slate-100 text-slate-400 text-[11px]">
+                {{-- Default State --}}
+                <div class="mt-8 pt-4 border-t border-slate-100 text-slate-400 text-[11px]">
                     <p class="flex items-center justify-center gap-1.5">
                         <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -307,56 +480,104 @@
             @endif
         </div>
     </div>
-@push('scripts')
-    <script>
-        function copyRegNumber(text, btn) {
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(text);
-            } else {
-                let textArea = document.createElement("textarea");
-                textArea.value = text;
-                textArea.style.position = "fixed";
-                textArea.style.left = "-999999px";
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                document.execCommand('copy');
-                textArea.remove();
+    @push('scripts')
+        <script>
+            function copyRegNumber(text, btn) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(text);
+                } else {
+                    let textArea = document.createElement("textarea");
+                    textArea.value = text;
+                    textArea.style.position = "fixed";
+                    textArea.style.left = "-999999px";
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    document.execCommand('copy');
+                    textArea.remove();
+                }
+
+                // Visual feedback pada tombol salin
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = `
+                                                                                                            <svg class="w-3.5 h-3.5 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                                                                                                            </svg>
+                                                                                                            <span>Tersalin!</span>`;
+                btn.classList.remove('bg-teal-600', 'hover:bg-teal-700');
+                btn.classList.add('bg-emerald-700');
+
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('bg-emerald-700');
+                    btn.classList.add('bg-teal-600', 'hover:bg-teal-700');
+                }, 2500);
             }
 
-            // Visual feedback pada tombol salin
-            const originalHTML = btn.innerHTML;
-            btn.innerHTML = `
-                            <svg class="w-3.5 h-3.5 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Tersalin!</span>
-                        `;
-            btn.classList.remove('bg-teal-600', 'hover:bg-teal-700');
-            btn.classList.add('bg-emerald-700');
+            function handleFileSelect(input, previewId, dropzoneId) {
+                if (input.files && input.files[0]) {
+                    const file = input.files[0];
 
-            setTimeout(() => {
-                btn.innerHTML = originalHTML;
-                btn.classList.remove('bg-emerald-700');
-                btn.classList.add('bg-teal-600', 'hover:bg-teal-700');
-            }, 2500);
-        }
+                    // Format ukuran file (KB / MB)
+                    let sizeFormatted = '';
+                    if (file.size < 1024 * 1024) {
+                        sizeFormatted = (file.size / 1024).toFixed(1) + ' KB';
+                    } else {
+                        sizeFormatted = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+                    }
 
-        function dismissToast() {
-            const toast = document.getElementById('toast-success');
-            if (toast) {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateY(-10px)';
-                setTimeout(() => toast.remove(), 300);
+                    // Dapatkan identifier key (rec / prop)
+                    const key = previewId.replace('preview_', '');
+
+                    // Set nama file dan ukuran
+                    document.getElementById('filename_' + key).innerText = file.name;
+
+                    const fileSizeEl = document.getElementById('filesize_' + key);
+                    fileSizeEl.innerText = sizeFormatted + ' • Berhasil dipilih';
+
+                    fileSizeEl.classList.remove('text-slate-400');
+                    fileSizeEl.classList.add('text-teal-700');
+
+                    // Sembunyikan dropzone & tampilkan card preview
+                    const dropzone = document.getElementById(dropzoneId);
+                    if (dropzone) {
+                        dropzone.classList.add('hidden');
+                        dropzone.classList.remove('block');
+                    }
+
+                    const preview = document.getElementById(previewId);
+                    if (preview) {
+                        preview.classList.remove('hidden');
+                        preview.classList.add('flex');
+                    }
+                }
             }
-        }
 
-        // Auto dismiss toast setelah 5 detik
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                dismissToast();
-            }, 5000);
-        });
-    </script>
-@endpush
+            function removeFile(inputId, previewId, dropzoneId) {
+                const input = document.getElementById(inputId);
+                if (input) input.value = '';
+
+                const key = previewId.replace('preview_', '');
+
+                const preview = document.getElementById(previewId);
+                if (preview) {
+                    preview.classList.add('hidden');
+                    preview.classList.remove('flex');
+                }
+
+                const dropzone = document.getElementById(dropzoneId);
+                if (dropzone) {
+                    dropzone.classList.remove('hidden');
+                    dropzone.classList.add('block');
+                }
+
+                const fileSizeEl = document.getElementById('filesize_' + key);
+                if (fileSizeEl) {
+                    fileSizeEl.innerText = "0 KB • Belum dipilih";
+                    fileSizeEl.classList.remove('text-teal-700');
+                    fileSizeEl.classList.add('text-slate-400');
+                }
+            }
+        </script>
+    @endpush
 @endsection
