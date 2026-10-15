@@ -37,7 +37,7 @@ class AttendancesController extends Controller
 
         $tingkatKehadiran = $totalDaysRecorded > 0
             ? round(($totalHadir / $totalDaysRecorded) * 100)
-            : 100;
+            : 0;
 
         $statPresensi = [
             'totalHadir' => $totalHadir,
