@@ -27,8 +27,5 @@
         "SESSION_DRIVER": "cookie",
         "SESSION_SECURE_COOKIE": "true",
         "LOG_CHANNEL": "stderr"
-    },
-    "functions": {
-        "api/index.php": { "memory": 1024, "maxDuration": 30 }
     }
 }
