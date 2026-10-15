@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AttendanceTimExport;
 use App\Models\Applications;
 use App\Models\Internships;
 use App\Models\User;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HrdController extends Controller
 {
@@ -213,5 +215,12 @@ class HrdController extends Controller
             Log::info("Terjadi Kesalahan: " . $th);
             return redirect()->back()->with('error', 'Gagal Memperbarui Status, Terjadi Kesalahan!');
         }
+    }
+
+    public function unduhRekapAbsen($timId) {
+        $tim = Applications::findOrFail($timId);
+        $namaFile = 'rekap-absen-' . Str::slug($tim->institusi) . '-' . date('Ymd') . '.xlsx';
+
+        return Excel::download(new AttendanceTimExport($timId), $namaFile);
     }
 }
