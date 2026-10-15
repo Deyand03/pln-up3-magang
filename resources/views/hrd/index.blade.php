@@ -349,6 +349,21 @@
                             </div>
                         </div>
 
+                        <div class="">
+                            <a href="{{ route('dashboard-hrd.unduh-rekap-absen', $tim->id) }}"
+                                class="w-full flex items-center justify-center gap-2 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-extrabold rounded-xl border border-emerald-200 transition-colors shadow-sm group">
+
+                                <svg class="w-4 h-4 transform group-hover:-translate-y-0.5 transition-transform" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Unduh Rekap Absen (Excel)
+                            </a>
+                            <p class="text-[9px] text-slate-400 text-center mt-1.5 font-semibold">Sistem otomatis merekap data
+                                dari awal hingga akhir magang.</p>
+                        </div>
+
                         <!-- Footer Card: Dropdown Kelola Tim -->
                         <div class="pt-4 border-t border-slate-100 flex items-center justify-between relative z-20">
                             <div class="text-[11px] font-bold text-slate-500">
