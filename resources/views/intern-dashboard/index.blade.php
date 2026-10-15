@@ -198,7 +198,8 @@
                                 <span class="text-[10px] font-bold text-teal-700 uppercase tracking-wider block">Mentor
                                     Pembimbing</span>
                                 <h3 class="text-sm font-extrabold text-slate-900">
-                                    {{ $dataMentor->name ?? 'Belum ada Mentor' }}</h3>
+                                    {{ $dataMentor->name ?? 'Belum ada Mentor' }}
+                                </h3>
                                 <span class="text-[11px] text-slate-500">Supervisor Divisi
                                     {{ Auth::user()->internship->department ?? 'N/A' }}</span>
                             </div>
@@ -219,8 +220,8 @@
                                 $waLink = 'https://wa.me/' . $formattedPhone;
                             }
                         @endphp
-                        <a href="{{ $waLink }}" target="_blank"
-                            @if (!$dataMentor || empty($dataMentor->phone)) onclick="alert('Nomor WhatsApp mentor belum tersedia!'); return false;" @endif
+                        <a href="{{ $waLink }}" target="_blank" @if (!$dataMentor || empty($dataMentor->phone))
+                        onclick="alert('Nomor WhatsApp mentor belum tersedia!'); return false;" @endif
                             class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs py-3 px-4 rounded-xl shadow-md shadow-emerald-600/20 transition-all inline-flex items-center justify-center gap-2 active:scale-98 @if (!$dataMentor || empty($dataMentor->phone)) opacity-50 cursor-not-allowed @endif">
                             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                                 <path
@@ -437,7 +438,7 @@
                     return document.querySelector(selector)
                 }
 
-                document.addEventListener('click', function(e) {
+                document.addEventListener('click', function (e) {
                     const paginationLink = e.target.closest('.pagination-links a');
                     if (paginationLink) {
                         e.preventDefault();
@@ -447,6 +448,9 @@
                 });
 
                 function fetchData(url, updateUrl = true) {
+                    const u = new URL(url, window.location.origin);
+                    const safeUrl = u.pathname + u.search;
+
                     const wrapper = document.getElementById('logbook-data');
                     const spinner = document.getElementById('loading-spinner');
 
@@ -457,10 +461,11 @@
                     });
 
                     fetch(url, {
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
-                            }
-                        })
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        credentials: 'same-origin',
+                    })
                         .then(response => {
                             if (!response.ok) throw new Error('Gagal mengambil data!');
                             return response.text();
@@ -468,7 +473,7 @@
                         .then(html => {
                             wrapper.innerHTML = html;
                             if (updateUrl) {
-                                window.history.pushState(null, '', url);
+                                window.history.pushState(null, '', safeUrl);
                             }
                         })
                         .catch(error => {
@@ -482,7 +487,7 @@
                         });
                 }
 
-                window.addEventListener('popstate', function() {
+                window.addEventListener('popstate', function () {
                     fetchData(window.location.href, false);
                 });
             })
