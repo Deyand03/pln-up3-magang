@@ -56,6 +56,7 @@ class UserSeeder extends Seeder
             'name' => 'Defry',
             'email' => 'defry@gmail.com',
             'password' => Hash::make('password123'),
+            'foto_profil' => 'foto_profil/foto_profil1-1791774021-jpg',
             'role' => 'intern',
             'phone' => '089566778899',
         ]);
