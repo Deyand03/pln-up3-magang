@@ -10,7 +10,6 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        // name, email dan phone harusnya ada di user, nanti tanya alur data nya gimana kok tabel applications bisa ada field itu
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->string('registration_number')->unique();
