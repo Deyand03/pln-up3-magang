@@ -222,7 +222,7 @@
                                 </button>
 
                                 <!-- Tombol Absen Pulang -->
-                                <button type="submit" name="type" value="pulang" id="check_out"
+                                <button type="submit" name="type" value="pulang" id="check_out" disabled
                                     class="w-full bg-slate-100 text-black/50 font-extrabold text-xs py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-not-allowed disabled:opacity-50">
                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
@@ -246,8 +246,8 @@
                             </div>
                         @elseif($isIzinSakitAlfaToday)
                             <div class="p-4  text-xs font-semibold flex items-center gap-2.5
-                                                    {{ $todayAttendance->status !== 'alfa' ? 'bg-sky-50 border border-sky-200/90 rounded-2xl text-sky-900' : 'bg-rose-50 border border-rose-200/90 rounded-2xl text-rose-900' }}
-                                                ">
+                                                                    {{ $todayAttendance->status !== 'alfa' ? 'bg-sky-50 border border-sky-200/90 rounded-2xl text-sky-900' : 'bg-rose-50 border border-rose-200/90 rounded-2xl text-rose-900' }}
+                                                                ">
                                 @if ($todayAttendance->status == 'alfa')
                                     <span class="text-base shrink-0">⚠️</span>
                                     <span>Anda tidak menghadiri magang untuk hari ini (Tercatat Alfa).</span>
@@ -424,6 +424,7 @@
         const MAX_RADIUS_METERS = 80;
 
         let map, userMarker, officeMarker, radiusCircle;
+        let isInRadius = false;
 
         function initMap() {
             map = L.map('leaflet-map').setView([OFFICE_LAT, OFFICE_LNG], 16);
@@ -451,9 +452,11 @@
         function refreshGPS() {
             const badge = document.getElementById('radius-status-badge');
             const btnCheckin = document.getElementById('btn-checkin');
-            const btnCheckout = document.getElementById('check_out');
 
-            // 1. Kunci tombol dan ubah status badge saat proses mencari lokasi
+            // [BARU] Reset: selama mendeteksi, anggap di luar radius
+            isInRadius = false;
+            checkCheckoutTime();
+
             if (badge) {
                 badge.className =
                     "text-[10px] px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 font-bold border border-slate-200";
@@ -461,9 +464,6 @@
             }
             if (btnCheckin) {
                 btnCheckin.disabled = true;
-            }
-            if (btnCheckout) {
-                btnCheckout.disabled = true;
             }
 
             if (navigator.geolocation) {
@@ -475,31 +475,28 @@
                     document.getElementById('latitude').value = lat;
                     document.getElementById('longitude').value = lng;
 
-                    // Hitung Jarak Leaflet
                     const userLatLng = L.latLng(lat, lng);
                     const officeLatLng = L.latLng(OFFICE_LAT, OFFICE_LNG);
                     const distanceMeters = Math.round(userLatLng.distanceTo(officeLatLng));
 
                     document.getElementById('gps-distance').textContent = `${distanceMeters} Meter`;
 
-                    // Update User Marker
+                    // [BARU] Simpan status radius tepat setelah jarak dihitung
+                    isInRadius = distanceMeters <= MAX_RADIUS_METERS;
+
                     if (userMarker) map.removeLayer(userMarker);
                     userMarker = L.marker([lat, lng]).addTo(map).bindPopup('Lokasi Anda Saat Ini');
 
-                    // Adjust map view bounds to show both (Safe Leaflet bounds)
                     try {
                         const bounds = L.latLngBounds([
                             [OFFICE_LAT, OFFICE_LNG],
                             [lat, lng]
                         ]);
-                        map.fitBounds(bounds, {
-                            padding: [30, 30]
-                        });
+                        map.fitBounds(bounds, { padding: [30, 30] });
                     } catch (e) {
                         console.warn("Bounds adjust error:", e);
                     }
 
-                    // Check Validity
                     if (isIzinSakitAlfaToday) {
                         if (todayAttendance.status == 'alfa') {
                             badge.textContent = 'Tercatat Alfa Hari Ini';
@@ -511,7 +508,7 @@
                             badge.textContent = 'Tercatat Izin/Sakit Hari Ini';
                         }
                         btnCheckin.disabled = true;
-                    } else if (distanceMeters <= MAX_RADIUS_METERS) {
+                    } else if (isInRadius) {
                         badge.className =
                             "text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200";
                         badge.textContent = `Valid dalam Radius (${distanceMeters}m)`;
@@ -525,9 +522,15 @@
                         btnCheckin.disabled = true;
                     }
 
+                    // [BARU] Sinkronkan tombol pulang dengan status radius terbaru
+                    checkCheckoutTime();
+
                 }, function (error) {
                     console.warn("GPS error: " + error.message);
-                    // 2. Kunci tombol jika GPS mati / izin lokasi ditolak
+
+                    // [BARU] GPS gagal berarti dianggap di luar radius
+                    isInRadius = false;
+
                     if (badge) {
                         badge.className =
                             "text-[10px] px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold border border-rose-200";
@@ -536,14 +539,16 @@
                     if (btnCheckin) {
                         btnCheckin.disabled = true;
                     }
-                    if (btnCheckout) {
-                        btnCheckout.disabled = true;
-                    }
+
+                    checkCheckoutTime(); // [BARU]
                 }, {
                     enableHighAccuracy: true,
                     timeout: 10000
                 });
             } else {
+                // [BARU]
+                isInRadius = false;
+
                 if (badge) {
                     badge.className =
                         "text-[10px] px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold border border-rose-200";
@@ -552,26 +557,27 @@
                 if (btnCheckin) {
                     btnCheckin.disabled = true;
                 }
+
+                checkCheckoutTime();
             }
         }
 
         function checkCheckoutTime() {
             const now = new Date();
             const currentMinutes = now.getHours() * 60 + now.getMinutes();
-            const checkoutTimeMinutes = 16 * 60 + 30; // 16:30 WIB = 990 Menit
+            const checkoutTimeMinutes = 16 * 60 + 30;
 
             const isPassCheckoutTime = currentMinutes >= checkoutTimeMinutes;
             const btnCheckout = document.getElementById('check_out');
             const btnCheckin = document.getElementById('btn-checkin');
 
-            // Set state check-in button
             if (hasCheckedIn) {
                 btnCheckin.disabled = true;
                 btnCheckin.classList.add('opacity-50', 'cursor-not-allowed');
             }
 
-            // Set state check-out button
-            if (hasCheckedIn && !hasCheckedOut && isPassCheckoutTime) {
+            // [BARU] tambah syarat isInRadius
+            if (hasCheckedIn && !hasCheckedOut && isPassCheckoutTime && isInRadius) {
                 btnCheckout.disabled = false;
                 btnCheckout.classList.remove('bg-slate-100', 'text-black/50', 'cursor-not-allowed');
                 btnCheckout.classList.add('bg-slate-800', 'hover:bg-slate-900', 'active:scale-95', 'text-white',
