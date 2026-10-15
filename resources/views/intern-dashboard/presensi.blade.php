@@ -135,11 +135,11 @@
                     Kehadiran</span>
                 <div class="my-1 flex items-baseline gap-1">
                     <span
-                        class="text-2xl sm:text-3xl font-black text-emerald-700">{{ $statPresensi['tingkatKehadiran'] ?? '100%' }}</span>
+                        class="text-2xl sm:text-3xl font-black {{ $statPresensi['tingkatKehadiran'] == '0%' ? 'text-amber-700' : 'text-emerald-700' }}">{{ $statPresensi['tingkatKehadiran'] ?? '0%' }}</span>
                 </div>
                 <span
-                    class="w-fit inline-block text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
-                    Performa Baik
+                    class="w-fit inline-block text-[10px] font-bold {{ $statPresensi['tingkatKehadiran'] == '0%' ? 'text-amber-800 bg-amber-50 border-amber-100' : 'text-emerald-800 bg-emerald-50 border-emerald-100' }} px-2 py-0.5 rounded-md border ">
+                    {{ $statPresensi['tingkatKehadiran'] == '0%' ? 'Belum ada kehadiran' : ' dari total hari kerja' }}
                 </span>
             </div>
         </div>
