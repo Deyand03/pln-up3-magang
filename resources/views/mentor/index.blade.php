@@ -193,17 +193,17 @@
                 @endphp
 
                 <div x-data="{
-                                                            name: '{{ addslashes(strtolower($intern->user->name)) }}',
-                                                            institusi: '{{ addslashes(strtolower($intern->applications->institusi)) }}',
-                                                            pendingCount: {{ $intern->pending_logbooks_count }},
-                                                            statusAbsen: '{{ $statusAsli }}'
-                                                         }"
+                                name: '{{ addslashes(strtolower($intern->user->name)) }}',
+                                institusi: '{{ addslashes(strtolower($intern->applications->institusi)) }}',
+                                pendingCount: {{ $intern->pending_logbooks_count }},
+                                statusAbsen: '{{ $statusAsli }}'
+                            }"
                     x-show="(activeFilter === 'all' ||
-                                                                  (activeFilter === 'pending' && pendingCount > 0) ||
-                                                                  (activeFilter === 'hadir' && statusAbsen === 'hadir') ||
-                                                                  (activeFilter === 'tidak_hadir' && statusAbsen !== 'hadir'))
-                                                                  &&
-                                                                 (searchQuery === '' || name.includes(searchQuery.toLowerCase()) || institusi.includes(searchQuery.toLowerCase()))"
+                            (activeFilter === 'pending' && pendingCount > 0) ||
+                            (activeFilter === 'hadir' && statusAbsen === 'hadir') ||
+                            (activeFilter === 'tidak_hadir' && statusAbsen !== 'hadir'))
+                            &&
+                            (searchQuery === '' || name.includes(searchQuery.toLowerCase()) || institusi.includes(searchQuery.toLowerCase()))"
                     class="bg-white border border-slate-200 rounded-2xl p-5 hover:shadow-lg hover:border-teal-300 transition-all flex flex-col justify-between relative overflow-hidden group">
 
                     <!-- Glow Effect Logbook -->
