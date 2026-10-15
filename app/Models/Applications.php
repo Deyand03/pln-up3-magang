@@ -31,6 +31,6 @@ class Applications extends Model
 
     public function internship(): HasMany
     {
-        return $this->hasMany(Internships::class);
+        return $this->hasMany(Internships::class, 'application_id', 'id');
     }
 }
