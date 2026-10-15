@@ -11,7 +11,7 @@
         }
     ],
     "routes": [
-        { "src": "/(build|css|js|images)/(.*)", "dest": "/public/$1/$2" },
+        { "src": "/(.*\\.(?:png|jpe?g|gif|svg|ico|webp|css|js|woff2?|ttf|map))", "dest": "/public/$1" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
     "env": {
