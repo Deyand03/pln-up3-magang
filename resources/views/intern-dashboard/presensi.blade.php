@@ -245,10 +245,9 @@
                                     izin/sakit untuk hari ini tidak dapat dilakukan.</span>
                             </div>
                         @elseif($isIzinSakitAlfaToday)
-                            <div
-                                class="p-4  text-xs font-semibold flex items-center gap-2.5
-                                    {{ $todayAttendance->status !== 'alfa' ? 'bg-sky-50 border border-sky-200/90 rounded-2xl text-sky-900' : 'bg-rose-50 border border-rose-200/90 rounded-2xl text-rose-900' }}
-                                ">
+                            <div class="p-4  text-xs font-semibold flex items-center gap-2.5
+                                                    {{ $todayAttendance->status !== 'alfa' ? 'bg-sky-50 border border-sky-200/90 rounded-2xl text-sky-900' : 'bg-rose-50 border border-rose-200/90 rounded-2xl text-rose-900' }}
+                                                ">
                                 @if ($todayAttendance->status == 'alfa')
                                     <span class="text-base shrink-0">⚠️</span>
                                     <span>Anda tidak menghadiri magang untuk hari ini (Tercatat Alfa).</span>
@@ -258,13 +257,12 @@
                                 @endif
                             </div>
                         @else
-                            <form action="{{ route('presensi-intern.izin') }}" method="POST"
-                                enctype="multipart/form-data" class="space-y-3.5">
+                            <form action="{{ route('presensi-intern.izin') }}" method="POST" enctype="multipart/form-data"
+                                class="space-y-3.5">
                                 @csrf
                                 <div>
-                                    <label for="kategori_izin"
-                                        class="block text-xs font-bold text-slate-700 mb-1.5">Kategori Halangan <span
-                                            class="text-rose-500">*</span></label>
+                                    <label for="kategori_izin" class="block text-xs font-bold text-slate-700 mb-1.5">Kategori
+                                        Halangan <span class="text-rose-500">*</span></label>
                                     <select id="kategori_izin" name="kategori_izin"
                                         class="w-full text-xs px-3.5 py-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 transition-all text-slate-800 font-medium"
                                         required>
@@ -286,7 +284,8 @@
                                 <div>
                                     <label for="alasan" class="block text-xs font-bold text-slate-700 mb-1.5">Alasan /
                                         Keterangan Lengkap <span class="text-rose-500">*</span></label>
-                                    <textarea id="alasan" name="alasan" rows="3" placeholder="Jelaskan alasan izin Anda secara singkat..."
+                                    <textarea id="alasan" name="alasan" rows="3"
+                                        placeholder="Jelaskan alasan izin Anda secara singkat..."
                                         class="w-full text-xs p-3.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-teal-600/20 focus:border-teal-600 transition-all text-slate-800 placeholder:text-slate-400 font-medium"
                                         required></textarea>
                                 </div>
@@ -452,6 +451,7 @@
         function refreshGPS() {
             const badge = document.getElementById('radius-status-badge');
             const btnCheckin = document.getElementById('btn-checkin');
+            const btnCheckout = document.getElementById('check_out');
 
             // 1. Kunci tombol dan ubah status badge saat proses mencari lokasi
             if (badge) {
@@ -462,9 +462,12 @@
             if (btnCheckin) {
                 btnCheckin.disabled = true;
             }
+            if (btnCheckout) {
+                btnCheckout.disabled = true;
+            }
 
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
+                navigator.geolocation.getCurrentPosition(function (position) {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
 
@@ -498,7 +501,7 @@
 
                     // Check Validity
                     if (isIzinSakitAlfaToday) {
-                        if(todayAttendance.status == 'alfa') {
+                        if (todayAttendance.status == 'alfa') {
                             badge.textContent = 'Tercatat Alfa Hari Ini';
                             badge.className =
                                 "text-[10px] px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold border border-rose-20 ";
@@ -522,7 +525,7 @@
                         btnCheckin.disabled = true;
                     }
 
-                }, function(error) {
+                }, function (error) {
                     console.warn("GPS error: " + error.message);
                     // 2. Kunci tombol jika GPS mati / izin lokasi ditolak
                     if (badge) {
@@ -532,6 +535,9 @@
                     }
                     if (btnCheckin) {
                         btnCheckin.disabled = true;
+                    }
+                    if (btnCheckout) {
+                        btnCheckout.disabled = true;
                     }
                 }, {
                     enableHighAccuracy: true,
@@ -620,7 +626,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 const paginationLink = e.target.closest('.pagination-links a');
                 if (paginationLink) {
                     e.preventDefault();
@@ -640,10 +646,10 @@
                 });
 
                 fetch(url, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
                     .then(response => {
                         if (!response.ok) throw new Error('Gagal mengambil data!');
                         return response.text();
@@ -665,7 +671,7 @@
                     });
             }
 
-            window.addEventListener('popstate', function() {
+            window.addEventListener('popstate', function () {
                 fetchData(window.location.href, false);
             });
 
