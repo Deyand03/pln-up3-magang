@@ -58,6 +58,8 @@ Route::middleware(['auth', 'role:hrd'])->group(function () {
     Route::get('/dashboard-hrd/pendaftar', [HrdController::class, 'tinjauPendaftar'])->name('dashboard-hrd.pendaftar');
     Route::get('/dashboard-hrd/pendaftar/{id}', [HrdController::class, 'showPendaftar'])->name('dashboard-hrd.pendaftar.detail');
     Route::patch('/dashboard-hrd/pendaftar/{id}', [HrdController::class, 'updateStatusPendaftaran'])->name('dashboard-hrd.pendaftar.detail.update');
+
+    Route::get('/dashboard-hrd/tim/{id}/rekap-absen', [HrdController::class, 'unduhRekapAbsen'])->name('dashboard-hrd.unduh-rekap-absen');
 });
 
 require __DIR__ . '/auth.php';
