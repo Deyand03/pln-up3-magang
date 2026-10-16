@@ -34,18 +34,34 @@ class ApplicationSeeder extends Seeder
         // Pengajuan 2: Masih Pending (Menunggu Verifikasi HRD)
         Applications::create([
             'registration_number' => 'PLN-MG-20260905',
-            'name' => 'Megumi',
-            'email' => 'megumi@gmail.com',
+            'name' => 'Rafli',
+            'email' => 'rafli@gmail.com',
             'phone' => '081377889900',
-            'nim_nisn' => 'F1E120045',
+            'nim_nisn' => '701210002',
             'institusi' => 'Universitas Jambi',
-            'jurusan' => 'Hukum',
+            'jurusan' => 'Teknik Elektro',
             'total_interns' => 2,
-            'start_date' => '2026-10-01',
+            'start_date' => '2026-11-01',
             'end_date' => '2026-12-31',
             'recommendation_letter' => 'uploads/proposals/surat_rekomendasi_unja.pdf',
             'proposal' => 'uploads/proposals/proposal_magang_unja.pdf',
             'status' => 'pending',
+        ]);
+
+        Applications::create([
+            'registration_number' => 'PLN-MG-20260910',
+            'name' => 'Megumi',
+            'email' => 'megumi@gmail.com',
+            'phone' => '081377889900',
+            'nim_nisn' => '701210003',
+            'institusi' => 'Universitas Jambi',
+            'jurusan' => 'Teknik Elektro',
+            'total_interns' => 2,
+            'start_date' => '2026-11-01',
+            'end_date' => '2026-12-31',
+            'recommendation_letter' => 'uploads/proposals/surat_rekomendasi_unja.pdf',
+            'status' => 'revision',
+            'notes' => 'Surat rekomendasi tidak sesuai format'
         ]);
     }
 }

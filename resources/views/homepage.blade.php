@@ -99,18 +99,6 @@
                     </div>
                 </div>
 
-                {{-- Stat 3 --}}
-                <div class="flex-1 flex flex-col items-center gap-2 sm:gap-4 group">
-                    <span
-                        class="text-[#2F698B] text-center text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-tight sm:tracking-wide h-8 flex items-center justify-center leading-tight">Posisi
-                        Yang Tersedia</span>
-                    <div
-                        class="bg-linear-to-br from-[#2F698B] to-[#1F4961] w-full max-w-[120px] sm:max-w-[140px] aspect-square rounded-xl sm:rounded-2xl shadow-lg flex flex-col justify-center items-center group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300">
-                        <span class="font-extrabold text-3xl sm:text-4xl md:text-5xl text-white">0</span>
-                        <p class="font-medium text-[10px] sm:text-xs md:text-sm text-white/80 mt-1">Posisi</p>
-                    </div>
-                </div>
-
             </div>
 
             {{-- Description --}}
