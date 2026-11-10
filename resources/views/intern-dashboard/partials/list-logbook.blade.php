@@ -36,7 +36,7 @@
                     {{ $logbook->status == 'approved' ? 'Disetujui' : 'Pending' }}
                 </span>
             </div>
-            <div>
+            <div class="{{ $logbook->status == 'approved' ? 'hidden' : 'block' }}">
                 <button
                     class="flex bg-teal-600 shadow-md hover:shadow-teal-500/30 active:scale-95 sm:flex sm:items-center sm:gap-2 text-white text-xs font-semibold px-2 py-1.5 rounded-lg hover:bg-teal-700 transition-all duration-300 btn-detail"
                     popovertarget="my-modal-2" data-date="{{ $logbook->date }}"
